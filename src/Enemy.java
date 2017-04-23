@@ -3,20 +3,10 @@
  */
 public class Enemy implements Movable{
 
-  int akuLah;
-  final String e;
-
-  public Enemy(String e) {
-    this.e = e;
-  }
-
-  public void moveEnemy() {
+  public Enemy() {
 
   }
-  public void an() {
-
-  }
-  public void qwww(){
+  public void move() {
 
   }
 }
