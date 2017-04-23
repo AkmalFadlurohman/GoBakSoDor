@@ -3,6 +3,6 @@
  */
 public class Enemy implements Movable{
   public void move() {
-
+    asdsad
   }
 }
