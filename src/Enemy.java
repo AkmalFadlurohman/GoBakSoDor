@@ -5,9 +5,20 @@ public class Enemy implements Movable{
   private String name;
   private int length;
   private int speed;
+  private int posY;
 
   public Enemy() {
+    name = "";
+    length = 0;
+    speed = 0;
+    posY = 0;
+  }
 
+  public Enemy(String name, int length, int speed, int posY) {
+    this.name = name;
+    this.length = length;
+    this.speed = speed;
+    this.posY = posY;
   }
 
   @Override
@@ -37,5 +48,13 @@ public class Enemy implements Movable{
 
   public void setSpeed(int speed) {
     this.speed = speed;
+  }
+
+  public int getPosY() {
+    return posY;
+  }
+
+  public void setPosY(int posY) {
+    this.posY = posY;
   }
 }
