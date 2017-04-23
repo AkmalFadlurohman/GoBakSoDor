@@ -3,7 +3,6 @@
  */
 public class Enemy implements Movable {
 
-
   @Override
   public void move() {
 
