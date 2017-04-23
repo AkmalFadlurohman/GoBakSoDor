@@ -8,7 +8,10 @@ public class Enemy implements Movable{
   private int posY;
 
   public Enemy() {
-
+    name = "";
+    length = 0;
+    speed = 0;
+    posY = 0;
   }
 
   public Enemy(String name, int length, int speed, int posY) {

@@ -9,6 +9,11 @@ public class Player implements Movable{
   private int posY;
 
   public Player() {
+    this.name = "";
+    this.score = 0;
+    this.life = 0;
+    this.posX = 0;
+    this.posY = 0;
   }
 
   public Player(String name, int score, int life, int posX, int posY) {
