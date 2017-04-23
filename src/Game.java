@@ -6,13 +6,12 @@ import java.awt.RenderingHints;
 
 @SuppressWarnings("serial")
 public class Game extends JPanel {
-
-  int x = 0;
-  int y = 0;
+  int x = 120;
+  int y = 120;
 
   private void moveBall() {
-    x = x + 1;
-    y = y + 1;
+    x = x + 250;
+//    y = y + 1;
   }
 
   @Override
@@ -28,14 +27,14 @@ public class Game extends JPanel {
     JFrame frame = new JFrame("Sample Frame");
     Game game = new Game();
     frame.add(game);
-    frame.setSize(300, 400);
+    frame.setSize(300, 300);
     frame.setVisible(true);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     while (true) {
-      game.moveBall();
+//      Thread.sleep(1000);
+//      game.moveBall();
       game.repaint();
-      Thread.sleep(10);
     }
   }
 }
