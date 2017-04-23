@@ -5,4 +5,7 @@ public class Player implements Movable{
   public void move() {
 
   }
+  public void coba() {
+
+  }
 }
