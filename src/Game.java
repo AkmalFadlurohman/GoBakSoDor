@@ -17,17 +17,18 @@ import javax.swing.Timer;
 @SuppressWarnings("serial")
 public class Game extends JPanel implements ActionListener, MouseListener, KeyListener {
 
-  final int HEIGHT = 800;
-  final int WIDTH = 1400;
+  final int HEIGHT = 600;
+  final int WIDTH = 800;
   int x = 0;
   int y = 0;
 
   int r = 50;
   int e1 = HEIGHT/2;
-  int speed = 10;
+  int speedEnemy = 10;
+  int speedPlayer = 15;
 
   public Game() {
-    JFrame frame = new JFrame("Sample Frame");
+    JFrame frame = new JFrame("DorSoBakGo");
     Timer timer = new Timer(10, this);
 
     frame.add(this);
@@ -40,10 +41,10 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
   }
 
   private void moveBall(int code) {
-    if (code == 1) x -= 10;
-    else if (code == 2) y += 10;
-    else if (code == 3) x += 10;
-    else if (code == 4) y -= 10;
+    if (code == 1) x -= speedPlayer;
+    else if (code == 2) y += speedPlayer;
+    else if (code == 3) x += speedPlayer;
+    else if (code == 4) y -= speedPlayer;
   }
 
   @Override
@@ -58,7 +59,7 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
     g2d.fillRect(WIDTH - 100,0,100, HEIGHT);
     g2d.setColor(new Color(0));
     g2d.fillOval(x, y, r, r);
-    g2d.fillOval(HEIGHT/2, e1, r, r);
+    g2d.fillRect(HEIGHT/2, e1, 30, 100);
   }
 
   public static void main(String[] args) {
@@ -72,10 +73,10 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
   }
 
   private void moveEnemy() {
-    if (e1 > HEIGHT || e1 < 0) {
-      speed *= -1;
+    if (e1 > HEIGHT-r || e1 < 0) {
+      speedEnemy *= -1;
     }
-    e1 += speed;
+    e1 += speedEnemy;
   }
 
   @Override
