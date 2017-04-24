@@ -43,11 +43,14 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     int enemyPosX = HEIGHT / 2;
     int enemyPosY = HEIGHT / 2 - 30;
     int enemySpeed = 10;
+    int dir = 0;
     for (int i = 0; i < enemyCount; i++) {
-      enemyPool[i] = new Enemy("Enemy" + i, 30, 100, enemySpeed, enemyPosX, enemyPosY);
+      enemyPool[i] = new Enemy("Enemy" + i, 30, 100, enemySpeed, enemyPosX, enemyPosY, dir);
       enemyPosX += 200;
       enemyPosY += 50;
       enemySpeed += 2;
+      if (dir == 0) dir = 1;
+      else if (dir == 1) dir = 0;
     }
     timer.start();
 

@@ -1,11 +1,13 @@
 /**
  * Created by Diki Ardian W (13515092) on 4/23/17.
  */
-public class Enemy implements Movable,Runnable {
+public class Enemy implements Movable, Runnable {
+
   private String name;
   private int width, height;
   private int speed;
   private Point pos;
+  private int dir;
 
   public Enemy() {
     name = "";
@@ -13,32 +15,35 @@ public class Enemy implements Movable,Runnable {
     height = 0;
     speed = 0;
     pos = new Point();
+    dir = 0;
   }
 
-  public Enemy(String name, int width, int height, int speed, int posX, int posY) {
+  public Enemy(String name, int width, int height, int speed, int posX, int posY, int dir) {
     this.name = name;
     this.width = width;
     this.height = height;
     this.speed = speed;
     this.pos = new Point(posX, posY);
+    this.dir = dir;
   }
 
-  public Enemy(String name, int width, int height, int speed, Point pos) {
-    this.name = name;
-    this.width = width;
-    this.height = height;
-    this.speed = speed;
-    this.pos = pos;
-  }
   public void run() {
-    move(0);
+    move(dir);
   }
+
   @Override
   public void move(int code) {
-    if (pos.getY() > Game.HEIGHT - height || pos.getY() < 0) {
-      speed *= -1;
+    if (code == 0) {
+      if (pos.getY() > Game.HEIGHT - height || pos.getY() < 0) {
+        speed *= -1;
+      }
+      pos.setY(pos.getY() + speed);
+    } else if (code == 1) {
+      if (pos.getX() > Game.WIDTH - width || pos.getX() < 0) {
+        speed *= -1;
+      }
+      pos.setX(pos.getX() + speed);
     }
-    pos.setY(pos.getY() + speed);
   }
 
   public String getName() {
