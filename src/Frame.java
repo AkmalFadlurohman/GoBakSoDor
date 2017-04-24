@@ -14,7 +14,7 @@ public class Frame extends JFrame {
     setVisible(true);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setResizable(false);
-    Game game = new Game(3);
+    Game game = new Game(1);
     add(game);
     addKeyListener(game);
   }
