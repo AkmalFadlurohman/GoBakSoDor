@@ -15,7 +15,7 @@ import javax.swing.Timer;
 @SuppressWarnings("serial")
 public class Game extends JPanel implements ActionListener, KeyListener {
 
-  static final int HEIGHT = 720;
+  static final int HEIGHT = 600;
   static final int WIDTH = 1280;
 
   Player player;
@@ -49,8 +49,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
       enemyPosX += 200;
       enemyPosY += 50;
       enemySpeed += 2;
-      if (dir == 0) dir = 1;
-      else if (dir == 1) dir = 0;
+      new Thread(enemyPool[i]).start();
     }
     timer.start();
   }
@@ -66,7 +65,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     g2d.setColor(new Color(231, 76, 60));
     g2d.fillRect(WIDTH - 100, 0, 100, HEIGHT);
     g2d.setColor(new Color(0));
-    g2d.fillOval(player.getPos().getX(), player.getPos().getY(), player.getRadius(), player.getRadius());
+    g2d.fillOval(player.getPos().getX(), player.getPos().getY(), player.getDiameter(), player.getDiameter());
     for (Enemy anEnemyPool : enemyPool) {
       g2d.fillRect(anEnemyPool.getPos().getX(), anEnemyPool.getPos().getY(), anEnemyPool.getWidth(), anEnemyPool.getHeight());
     }
@@ -75,9 +74,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
   @Override
   public void actionPerformed(ActionEvent actionEvent) {
     repaint();
-    for (Enemy anEnemyPool : enemyPool) {
-      new Thread(anEnemyPool).start();
-    }
   }
 
   @Override
