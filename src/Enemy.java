@@ -23,6 +23,14 @@ public class Enemy implements Movable {
     this.pos = new Point(posX, posY);
   }
 
+  public Enemy(String name, int width, int height, int speed, Point pos) {
+    this.name = name;
+    this.width = width;
+    this.height = height;
+    this.speed = speed;
+    this.pos = pos;
+  }
+
   @Override
   public void move(int code) {
     if (pos.getY() > Game.HEIGHT - height || pos.getY() < 0) {

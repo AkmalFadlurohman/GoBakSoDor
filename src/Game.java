@@ -2,20 +2,21 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Set;
 import java.util.TreeSet;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 @SuppressWarnings("serial")
-public class Game extends JPanel implements ActionListener, MouseListener, KeyListener {
+public class Game extends JPanel implements ActionListener, KeyListener {
 
   static final int HEIGHT = 720;
   static final int WIDTH = 1280;
-  Point playerInitPos;
 
   Player player;
 
@@ -24,28 +25,19 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
   Enemy[] enemyPool;
 
   public Game(int enemyCount) {
-    JFrame frame = new JFrame("DorSoBakGo");
     Timer timer = new Timer(10, this);
 
-    playerInitPos = new Point(0, 0);
-    player = new Player("jekk", 0, 3, playerInitPos, speedPlayer, radiusPlayer);
+    player = new Player("jekk", 0, 3, new Point(0, HEIGHT / 2 - radiusPlayer), speedPlayer, radiusPlayer);
 
-    JLabel playerName = new JLabel(" Name : " + player.getName()+" ");
-    JLabel playerLife = new JLabel(" Life : " + player.getLife()+" ");
-    JLabel playerScore = new JLabel("Score : " + player.getScore()+" ");
+    JLabel playerName = new JLabel(" Name : " + player.getName() + " ");
+    JLabel playerLife = new JLabel(" Life : " + player.getLife() + " ");
+    JLabel playerScore = new JLabel("Score : " + player.getScore() + " ");
     playerName.setFont(playerName.getFont().deriveFont(36.0f));
     playerLife.setFont(playerLife.getFont().deriveFont(36.0f));
     playerScore.setFont(playerScore.getFont().deriveFont(36.0f));
     add(playerName);
     add(playerLife);
     add(playerScore);
-
-    frame.add(this);
-    frame.setSize(WIDTH, HEIGHT);
-    frame.setVisible(true);
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.addKeyListener(this);
-    frame.setResizable(false);
 
     enemyPool = new Enemy[enemyCount];
     int enemyPosX = HEIGHT / 2;
@@ -142,29 +134,5 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
     pressed.remove(keyEvent.getKeyCode());
   }
 
-  @Override
-  public void mouseClicked(MouseEvent mouseEvent) {
-
-  }
-
-  @Override
-  public void mousePressed(MouseEvent mouseEvent) {
-
-  }
-
-  @Override
-  public void mouseReleased(MouseEvent mouseEvent) {
-
-  }
-
-  @Override
-  public void mouseEntered(MouseEvent mouseEvent) {
-
-  }
-
-  @Override
-  public void mouseExited(MouseEvent mouseEvent) {
-
-  }
 
 }
