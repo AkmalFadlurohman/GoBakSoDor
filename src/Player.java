@@ -1,7 +1,7 @@
 /**
  * Created by Diki Ardian W (13515092) on 4/23/17.
  */
-public class Player implements Movable{
+public class Player implements Movable {
   private String name;
   private int score;
   private int life;
@@ -68,17 +68,17 @@ public class Player implements Movable{
   @Override
   public void move(int code) {
     switch (code) {
-      case 1 :
-        pos.setX(pos.getX()-speed);
+      case 1:
+        pos.setX(pos.getX() - speed);
         break;
-      case 2 :
-        pos.setY(pos.getY()+speed);
+      case 2:
+        pos.setY(pos.getY() + speed);
         break;
-      case 3 :
-        pos.setX(pos.getX()+speed);
+      case 3:
+        pos.setX(pos.getX() + speed);
         break;
-      case 4 :
-        pos.setY(pos.getY()-speed);
+      case 4:
+        pos.setY(pos.getY() - speed);
         break;
     }
   }

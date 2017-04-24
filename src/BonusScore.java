@@ -3,9 +3,10 @@
  */
 public class BonusScore extends Item {
   public BonusScore() {
-    super("Bonus Score","Player's score +10",0,0);
+    super("Bonus Score", "Player's score +10", 0, 0);
   }
+
   public void applyEffect(Player P) {
-    P.setScore(P.getScore()+10);
+    P.setScore(P.getScore() + 10);
   }
 }

@@ -1,9 +1,9 @@
 /**
  * Created by Diki Ardian W (13515092) on 4/23/17.
  */
-public class Enemy implements Movable{
+public class Enemy implements Movable {
   private String name;
-  private int width,height;
+  private int width, height;
   private int speed;
   private Point pos;
 
@@ -40,13 +40,21 @@ public class Enemy implements Movable{
     this.name = name;
   }
 
-  public int getWidth() { return width; }
+  public int getWidth() {
+    return width;
+  }
 
-  public void setWidth(int width) { this.width = width; }
+  public void setWidth(int width) {
+    this.width = width;
+  }
 
-  public int getHeight() { return height; }
+  public int getHeight() {
+    return height;
+  }
 
-  public void setHeight(int height) { this.height = height; }
+  public void setHeight(int height) {
+    this.height = height;
+  }
 
   public int getSpeed() {
     return speed;

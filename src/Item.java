@@ -3,14 +3,16 @@
  */
 public abstract class Item {
 
-  private String name,effect;
-  int locX,locY;
+  private String name, effect;
+  int locX, locY;
 
-  public Item(String name,String effect,int x,int y) {
+  public Item(String name, String effect, int x, int y) {
     this.name = name;
     this.effect = effect;
-    locX = x; locY = y;
+    locX = x;
+    locY = y;
   }
+
   public String getEffect() {
     return effect;
   }

@@ -3,11 +3,12 @@
  */
 public class Special extends Item {
   public Special() {
-    super("Special","Slow enemies movement for one second",0,0);
+    super("Special", "Slow enemies movement for one second", 0, 0);
   }
+
   public void applyEffect(Enemy[] E, int speed) {
-    for (int i=0;i<=E.length;i++) {
-      E[i].setSpeed(E[i].getSpeed()-speed);
+    for (int i = 0; i <= E.length; i++) {
+      E[i].setSpeed(E[i].getSpeed() - speed);
     }
   }
 }
