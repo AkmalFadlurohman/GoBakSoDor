@@ -21,7 +21,14 @@ public class Game extends JPanel implements ActionListener, KeyListener {
   int playerPosX;
   int playerPosY;
   int level;
-
+  int startPosX;
+  int startPosY;
+  int startHeight;
+  int startWidth;
+  int finishPosX;
+  int finishPosY;
+  int finishHeight;
+  int finishWidth;
   private BufferedImage image;
 
   public Game(int level) throws FileNotFoundException {
@@ -39,6 +46,22 @@ public class Game extends JPanel implements ActionListener, KeyListener {
       FileInputStream fstream = new FileInputStream(namaFile);
       BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
       String strLine;
+      strLine = br.readLine();
+      startPosX = Integer.parseInt(strLine.substring(10));
+      strLine = br.readLine();
+      startPosY = Integer.parseInt(strLine.substring(10));
+      strLine = br.readLine();
+      startHeight = Integer.parseInt(strLine.substring(12));
+      strLine = br.readLine();
+      startWidth = Integer.parseInt(strLine.substring(11));
+      strLine = br.readLine();
+      finishPosX = Integer.parseInt(strLine.substring(11));
+      strLine = br.readLine();
+      finishPosY = Integer.parseInt(strLine.substring(11));
+      strLine = br.readLine();
+      finishHeight = Integer.parseInt(strLine.substring(13));
+      strLine = br.readLine();
+      finishWidth = Integer.parseInt(strLine.substring(12));
       strLine = br.readLine();
       int speedPlayer = Integer.parseInt(strLine.substring(12));
       strLine = br.readLine();

@@ -69,7 +69,7 @@ public class Frame extends JFrame implements ActionListener {
 
     } else if (source == newGame) {
       try {
-        game = new Game(1);
+        game = new Game(3);
         game.add(mainMenu);
         addKeyListener(game);
         panel.add("Game", game);
