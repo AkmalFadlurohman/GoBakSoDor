@@ -111,9 +111,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     Graphics2D g2d = (Graphics2D) g;
     g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     g2d.setColor(new Color(52, 152, 219));
-    g2d.fillRect(0, 0, 100, HEIGHT);
+    g2d.fillRect(startPosX, startPosY, startWidth, startHeight);
     g2d.setColor(new Color(231, 76, 60));
-    g2d.fillRect(WIDTH - 100, 0, 100, HEIGHT);
+    g2d.fillRect(finishPosX, finishPosY, finishWidth, finishHeight);
     g2d.setColor(new Color(0xFF23D3));
     g2d.fillOval(player.getPos().getX(), player.getPos().getY(), player.getDiameter(), player.getDiameter());
     g2d.setColor(new Color(0x000000));
