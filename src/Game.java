@@ -17,17 +17,16 @@ import javax.swing.Timer;
 @SuppressWarnings("serial")
 public class Game extends JPanel implements ActionListener, MouseListener, KeyListener {
 
-  final int HEIGHT = 600;
-  final int WIDTH = 800;
+  static final int HEIGHT = 600;
+  static final int WIDTH = 800;
   int x = 0;
   int y = 0;
 
   int r = 50;
-  int e1 = HEIGHT/2;
-  int speedEnemy = 10;
   int speedPlayer = 15;
+  Enemy[] enemyPool;
 
-  public Game() {
+  public Game(int enemyCount) {
     JFrame frame = new JFrame("DorSoBakGo");
     Timer timer = new Timer(10, this);
 
@@ -37,6 +36,12 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.addKeyListener(this);
 
+    enemyPool = new Enemy[enemyCount];
+    int enemyPosX = HEIGHT/2;
+    for (int i=0;i<enemyCount;i++) {
+      enemyPool[i] = new Enemy("Enemy1",30,100,10,enemyPosX,HEIGHT/2);
+      enemyPosX += (r+100);
+    }
     timer.start();
   }
 
@@ -59,24 +64,22 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
     g2d.fillRect(WIDTH - 100,0,100, HEIGHT);
     g2d.setColor(new Color(0));
     g2d.fillOval(x, y, r, r);
-    g2d.fillRect(HEIGHT/2, e1, 30, 100);
+    for (int i=0;i<enemyPool.length;i++) {
+      g2d.fillRect(enemyPool[i].getPosX(), enemyPool[i].getPosY(), enemyPool[i].getWidth(), enemyPool[i].getHeight());
+    }
   }
 
   public static void main(String[] args) {
-    Game game = new Game();
+    Game game = new Game(2);
   }
 
   @Override
   public void actionPerformed(ActionEvent actionEvent) {
     repaint();
-    moveEnemy();
-  }
-
-  private void moveEnemy() {
-    if (e1 > HEIGHT-r || e1 < 0) {
-      speedEnemy *= -1;
+    //moveEnemy();
+    for (int i=0;i<enemyPool.length;i++) {
+      enemyPool[i].move();
     }
-    e1 += speedEnemy;
   }
 
   @Override
