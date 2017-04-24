@@ -2,12 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.util.Set;
 import java.util.TreeSet;
 import javax.swing.JFrame;
@@ -57,7 +52,7 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
     int enemyPosY = HEIGHT / 2 - 30;
     int enemySpeed = 10;
     for (int i = 0; i < enemyCount; i++) {
-      enemyPool[i] = new Enemy("Enemy" + i, 30, 100, enemySpeed, new Point(enemyPosX, enemyPosY));
+      enemyPool[i] = new Enemy("Enemy" + i, 30, 100, enemySpeed, enemyPosX, enemyPosY);
       enemyPosX += 200;
       enemyPosY += 50;
       enemySpeed += 2;
