@@ -33,9 +33,18 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
     Timer timer = new Timer(10, this);
 
     playerInitPos = new Point(0, 0);
-    player = new Player("jekk", 0, 0, playerInitPos, speedPlayer, radiusPlayer);
+    player = new Player("jekk", 0, 3, playerInitPos, speedPlayer, radiusPlayer);
 
-    JLabel label = new JLabel("Label");
+    JLabel playerName = new JLabel(" Name : " + player.getName()+" ");
+    JLabel playerLife = new JLabel(" Life : " + player.getLife()+" ");
+    JLabel playerScore = new JLabel("Score : " + player.getScore()+" ");
+    playerName.setFont(playerName.getFont().deriveFont(36.0f));
+    playerLife.setFont(playerLife.getFont().deriveFont(36.0f));
+    playerScore.setFont(playerScore.getFont().deriveFont(36.0f));
+    add(playerName);
+    add(playerLife);
+    add(playerScore);
+
     frame.add(this);
     frame.setSize(WIDTH, HEIGHT);
     frame.setVisible(true);
