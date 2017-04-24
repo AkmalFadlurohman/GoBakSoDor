@@ -13,9 +13,9 @@ public class Player implements Movable {
     this.name = "";
     this.score = 0;
     this.life = 0;
-    this.pos.setX(0);
-    this.pos.setY(0);
+    this.pos = new Point(0, 0);
     this.speed = 10;
+    this.radius = 5;
   }
 
   public Player(String name, int score, int life, Point pos, int speed, int radius) {
@@ -23,6 +23,16 @@ public class Player implements Movable {
     this.score = score;
     this.life = life;
     this.pos = pos;
+    this.speed = speed;
+    this.radius = radius;
+  }
+
+  public Player(String name, int score, int life, int x, int y, int speed, int
+    radius) {
+    this.name = name;
+    this.score = score;
+    this.life = life;
+    this.pos = new Point(x, y);
     this.speed = speed;
     this.radius = radius;
   }
@@ -57,6 +67,11 @@ public class Player implements Movable {
 
   public void setPos(Point pos) {
     this.pos = pos;
+  }
+
+  public void setPos(int x, int y) {
+    this.pos.setX(x);
+    this.pos.setY(y);
   }
 
   public int getSpeed() {
@@ -95,5 +110,12 @@ public class Player implements Movable {
 
   public int getRadius() {
     return radius;
+  }
+
+  public boolean contain(int x, int y) {
+    return pos.getX() == x && pos.getY() == y;
+  }
+  public boolean contain(Point pos) {
+    return this.pos.getX() == pos.getX() && this.pos.getY() == pos.getY();
   }
 }
