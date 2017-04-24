@@ -78,7 +78,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     g2d.setColor(new Color(231, 76, 60));
     g2d.fillRect(WIDTH - 100, 0, 100, HEIGHT);
     g2d.setColor(new Color(0));
-    g2d.fillOval(player.getPos().getX(), player.getPos().getY(), player.getRadius(), player.getRadius());
+    g2d.fillOval(player.getPos().getX(), player.getPos().getY(), player.getDiameter(), player.getDiameter());
     for (Enemy anEnemyPool : enemyPool) {
       g2d.fillRect(anEnemyPool.getPos().getX(), anEnemyPool.getPos().getY(), anEnemyPool.getWidth(), anEnemyPool.getHeight());
     }
