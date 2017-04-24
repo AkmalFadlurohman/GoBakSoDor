@@ -1,7 +1,7 @@
 /**
  * Created by Diki Ardian W (13515092) on 4/23/17.
  */
-public class Enemy implements Movable {
+public class Enemy implements Movable,Runnable {
   private String name;
   private int width, height;
   private int speed;
@@ -30,7 +30,9 @@ public class Enemy implements Movable {
     this.speed = speed;
     this.pos = pos;
   }
-
+  public void run() {
+    move(0);
+  }
   @Override
   public void move(int code) {
     if (pos.getY() > Game.HEIGHT - height || pos.getY() < 0) {

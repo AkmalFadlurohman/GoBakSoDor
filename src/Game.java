@@ -85,7 +85,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
   public void actionPerformed(ActionEvent actionEvent) {
     repaint();
     for (Enemy anEnemyPool : enemyPool) {
-      anEnemyPool.move(0);
+      new Thread(anEnemyPool).start();
     }
   }
 
