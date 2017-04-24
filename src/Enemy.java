@@ -7,6 +7,7 @@ public class Enemy implements Movable, Runnable {
   private int speed;
   private Point pos;
   private int dir;
+  private int delay;
 
   public Enemy() {
     width = 0;
@@ -16,19 +17,20 @@ public class Enemy implements Movable, Runnable {
     dir = 0;
   }
 
-  public Enemy(int width, int height, int speed, int posX, int posY, int dir) {
+  public Enemy(int width, int height, int speed, int posX, int posY, int dir, int delay) {
     this.width = width;
     this.height = height;
     this.speed = speed;
     this.pos = new Point(posX, posY);
     this.dir = dir;
+    this.delay = delay;
   }
 
   public void run() {
     while (true) {
       move(dir);
       try {
-        Thread.sleep(10);
+        Thread.sleep(delay);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -81,5 +83,21 @@ public class Enemy implements Movable, Runnable {
 
   public void setPos(Point pos) {
     this.pos = pos;
+  }
+
+  public int getDir() {
+    return dir;
+  }
+
+  public void setDir(int dir) {
+    this.dir = dir;
+  }
+
+  public int getDelay() {
+    return delay;
+  }
+
+  public void setDelay(int delay) {
+    this.delay = delay;
   }
 }

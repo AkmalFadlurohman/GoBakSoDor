@@ -19,46 +19,74 @@ public class Game extends JPanel implements ActionListener, KeyListener {
   static final int HEIGHT = 600;
   static final int WIDTH = 1280;
   Player player;
+  Enemy[] enemyPool;
+  int playerPosX;
+  int playerPosY;
   JLabel playerName;
   JLabel playerLife;
   JLabel playerScore;
-  int speedPlayer;
-  int radiusPlayer;
 
-  Enemy[] enemyPool;
 
   public Game(int level) throws FileNotFoundException {
     String namaFile = "./level/" + Integer.toString(level) + ".txt";
-    System.out.println(System.getProperty("user.dir"));
     try {
       FileInputStream fstream = new FileInputStream(namaFile);
       BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
       String strLine;
-      int count = 0;
       strLine = br.readLine();
-      speedPlayer = Integer.parseInt(strLine.substring(12));
+      int speedPlayer = Integer.parseInt(strLine.substring(12));
+//      System.out.println(speedPlayer);
       strLine = br.readLine();
-      int playerPosX = Integer.parseInt(strLine.substring(11));
+      playerPosX = Integer.parseInt(strLine.substring(11));
+//      System.out.println(playerPosX);
       strLine = br.readLine();
-      int playerPosY = Integer.parseInt(strLine.substring(11));
+      playerPosY = Integer.parseInt(strLine.substring(11));
+//      System.out.println(playerPosY);
+      strLine = br.readLine();
+      int diameter = Integer.parseInt(strLine.substring(15));
+//      System.out.println(diameter);
+      strLine = br.readLine();
+      int enemyCount = Integer.parseInt(strLine.substring(12));
+//      System.out.println(enemyCount);
+      enemyPool = new Enemy[enemyCount];
+      for (int i = 0; i < enemyCount; i++) {
+        strLine = br.readLine();
+        int enemyHeight = Integer.parseInt(strLine.substring(12));
+//        System.out.println(enemyHeight);
+        strLine = br.readLine();
+        int enemyWidth = Integer.parseInt(strLine.substring(11));
+//        System.out.println(enemyWidth);
+        strLine = br.readLine();
+        int enemyPosX = Integer.parseInt(strLine.substring(10));
+//        System.out.println(enemyPosX);
+        strLine = br.readLine();
+        int enemyPosY = Integer.parseInt(strLine.substring(10));
+//        System.out.println(enemyPosY);
+        strLine = br.readLine();
+        int enemySpeed = Integer.parseInt(strLine.substring(11));
+//        System.out.println(enemySpeed);
+        strLine = br.readLine();
+        int delay = Integer.parseInt(strLine.substring(11));
+//        System.out.println(delay);
+        strLine = br.readLine();
+        int dir = Integer.parseInt(strLine.substring(15));
+//        System.out.println(dir);
 
-//      while ((strLine = br.readLine()) != null) {
-//        strTemp[brs] = strLine;
-//        for (int j = 0; j < strLine.length(); j++) {
-//          map[brs][j] = strLine.charAt(j);
-//        }
-//        brs++;
-//      }
-      player = new Player("jekk", 0, 3, new Point(playerPosX, playerPosY), speedPlayer, radiusPlayer);
-      System.out.println(player.getPos().getX());
-      System.out.println(player.getPos().getY());
+        enemyPool[i] = new Enemy(enemyWidth, enemyHeight, enemySpeed, enemyPosX, enemyPosY, dir, delay);
+//        enemyPosX += 200;
+//        enemyPosY += 50;
+//        enemySpeed += 2;
+        new Thread(enemyPool[i]).start();
+      }
+
+      player = new Player("jekk", new Point(playerPosX, playerPosY), speedPlayer, diameter);
+
     } catch (IOException ioe) {
       System.out.println(ioe.getMessage());
     }
 
+    Timer timer = new Timer(10, this);
 
-    //Timer timer = new Timer(10, this);
-    /*
     playerName = new JLabel(" Name : " + player.getName() + " ");
     playerLife = new JLabel(" Life : " + player.getLife() + " ");
     playerScore = new JLabel("Score : " + player.getScore() + " ");
@@ -70,22 +98,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     add(playerName);
     add(playerLife);
     add(playerScore);
-    */
-
-    int enemyCount = 10;
-    enemyPool = new Enemy[enemyCount];
-    int enemyPosX = HEIGHT / 2;
-    int enemyPosY = HEIGHT / 2 - 30;
-    int enemySpeed = 10;
-    int dir = 0;
-    for (int i = 0; i < enemyCount; i++) {
-      enemyPool[i] = new Enemy(30, 100, enemySpeed, enemyPosX, enemyPosY, dir);
-      enemyPosX += 200;
-      enemyPosY += 50;
-      enemySpeed += 2;
-      new Thread(enemyPool[i]).start();
-    }
-    //timer.start();
+    timer.start();
   }
 
   @Override
@@ -112,7 +125,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     for (Enemy anEnemyPool : enemyPool) {
       if (player.contain(anEnemyPool)) {
         player.setLife(player.getLife() - 1);
-        player.setPos(0, 0);
+        player.setPos(playerPosX, playerPosY);
       }
     }
     playerLife.setText(" Life : " + player.getLife() + " ");

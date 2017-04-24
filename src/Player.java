@@ -4,8 +4,8 @@
 public class Player implements Movable {
 
   private String name;
-  private int score;
-  private int life;
+  private static int score = 0;
+  private static int life = 3;
   private int speed;
   private Point pos;
   private int diameter;
@@ -19,19 +19,15 @@ public class Player implements Movable {
     this.diameter = 5;
   }
 
-  public Player(String name, int score, int life, Point pos, int speed, int diameter) {
+  public Player(String name, Point pos, int speed, int diameter) {
     this.name = name;
-    this.score = score;
-    this.life = life;
     this.pos = pos;
     this.speed = speed;
     this.diameter = diameter;
   }
 
-  public Player(String name, int score, int life, int x, int y, int speed, int diameter) {
+  public Player(String name, int x, int y, int speed, int diameter) {
     this.name = name;
-    this.score = score;
-    this.life = life;
     this.pos = new Point(x, y);
     this.speed = speed;
     this.diameter = diameter;
@@ -45,20 +41,20 @@ public class Player implements Movable {
     this.name = name;
   }
 
-  public int getScore() {
+  public static int getScore() {
     return score;
   }
 
-  public void setScore(int score) {
-    this.score = score;
+  public static void setScore(int score) {
+    Player.score = score;
   }
 
-  public int getLife() {
+  public static int getLife() {
     return life;
   }
 
-  public void setLife(int life) {
-    this.life = life;
+  public static void setLife(int life) {
+    Player.life = life;
   }
 
   public Point getPos() {
@@ -80,6 +76,10 @@ public class Player implements Movable {
 
   public void setSpeed(int speed) {
     this.speed = speed;
+  }
+
+  public void setDiameter(int diameter) {
+    this.diameter = diameter;
   }
 
   @Override
