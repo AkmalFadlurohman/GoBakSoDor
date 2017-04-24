@@ -15,7 +15,7 @@ import javax.swing.Timer;
 @SuppressWarnings("serial")
 public class Game extends JPanel implements ActionListener, KeyListener {
 
-  static final int HEIGHT = 720;
+  static final int HEIGHT = 600;
   static final int WIDTH = 1280;
 
   Player player;
@@ -45,26 +45,13 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     int enemySpeed = 10;
     int dir = 0;
     for (int i = 0; i < enemyCount; i++) {
-      enemyPool[i] = new Enemy("Enemy" + i, 30, 100, enemySpeed, enemyPosX, enemyPosY, dir);
+      enemyPool[i] = new Enemy(30, 100, enemySpeed, enemyPosX, enemyPosY, dir);
       enemyPosX += 200;
       enemyPosY += 50;
       enemySpeed += 2;
-      if (dir == 0) dir = 1;
-      else if (dir == 1) dir = 0;
+      new Thread(enemyPool[i]).start();
     }
     timer.start();
-
-//    WindowListener exitListener = new WindowAdapter() {
-//
-//      @Override
-//      public void windowClosing(WindowEvent e) {
-//        if (Player.) {
-//          System.exit(0);
-//        }
-//      }
-//    };
-//    frame.addWindowListener(exitListener);
-
   }
 
   @Override
@@ -87,9 +74,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
   @Override
   public void actionPerformed(ActionEvent actionEvent) {
     repaint();
-    for (Enemy anEnemyPool : enemyPool) {
-      new Thread(anEnemyPool).start();
-    }
   }
 
   @Override
