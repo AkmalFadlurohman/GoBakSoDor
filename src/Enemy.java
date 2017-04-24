@@ -20,10 +20,11 @@ public class Enemy implements Movable{
     this.speed = speed;
     this.posX = posX;
     this.posY = posY;
+
   }
 
   @Override
-  public void move() {
+  public void move(int code) {
     if (posY > Game.HEIGHT - height || posY < 0) {
       speed *= -1;
     }

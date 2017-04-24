@@ -7,6 +7,7 @@ public class Player implements Movable{
   private int life;
   private int posX;
   private int posY;
+  private int speed;
 
   public Player() {
     this.name = "";
@@ -14,14 +15,17 @@ public class Player implements Movable{
     this.life = 0;
     this.posX = 0;
     this.posY = 0;
+    this.speed = 0;
   }
 
-  public Player(String name, int score, int life, int posX, int posY) {
+  public Player(String name, int score, int life, int posX, int posY, int
+    speed) {
     this.name = name;
     this.score = score;
     this.life = life;
     this.posX = posX;
     this.posY = posY;
+    this.speed = speed;
   }
 
   public String getName() {
@@ -64,8 +68,29 @@ public class Player implements Movable{
     this.posY = posY;
   }
 
-  @Override
-  public void move() {
+  public int getSpeed() {
+    return speed;
+  }
 
+  public void setSpeed(int speed) {
+    this.speed = speed;
+  }
+
+  @Override
+  public void move(int code) {
+    switch (code) {
+      case 1 :
+        posX -= speed;
+        break;
+      case 2 :
+        posY += speed;
+        break;
+      case 3 :
+        posX += speed;
+        break;
+      case 4 :
+        posY -= speed;
+        break;
+    }
   }
 }
