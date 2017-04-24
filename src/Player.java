@@ -2,6 +2,7 @@
  * Created by Diki Ardian W (13515092) on 4/23/17.
  */
 public class Player implements Movable {
+
   private String name;
   private int score;
   private int life;

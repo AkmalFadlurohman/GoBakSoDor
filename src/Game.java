@@ -45,7 +45,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     int enemySpeed = 10;
     int dir = 0;
     for (int i = 0; i < enemyCount; i++) {
-      enemyPool[i] = new Enemy("Enemy" + i, 30, 100, enemySpeed, enemyPosX, enemyPosY, dir);
+      enemyPool[i] = new Enemy(30, 100, enemySpeed, enemyPosX, enemyPosY, dir);
       enemyPosX += 200;
       enemyPosY += 50;
       enemySpeed += 2;
@@ -53,18 +53,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
       else if (dir == 1) dir = 0;
     }
     timer.start();
-
-//    WindowListener exitListener = new WindowAdapter() {
-//
-//      @Override
-//      public void windowClosing(WindowEvent e) {
-//        if (Player.) {
-//          System.exit(0);
-//        }
-//      }
-//    };
-//    frame.addWindowListener(exitListener);
-
   }
 
   @Override

@@ -3,14 +3,12 @@
  */
 public class Enemy implements Movable, Runnable {
 
-  private String name;
   private int width, height;
   private int speed;
   private Point pos;
   private int dir;
 
   public Enemy() {
-    name = "";
     width = 0;
     height = 0;
     speed = 0;
@@ -18,8 +16,7 @@ public class Enemy implements Movable, Runnable {
     dir = 0;
   }
 
-  public Enemy(String name, int width, int height, int speed, int posX, int posY, int dir) {
-    this.name = name;
+  public Enemy(int width, int height, int speed, int posX, int posY, int dir) {
     this.width = width;
     this.height = height;
     this.speed = speed;
@@ -46,13 +43,6 @@ public class Enemy implements Movable, Runnable {
     }
   }
 
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
 
   public int getWidth() {
     return width;
