@@ -51,6 +51,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
       enemyPool = new Enemy[enemyCount];
       for (int i = 0; i < enemyCount; i++) {
         strLine = br.readLine();
+        strLine = br.readLine();
         int enemyHeight = Integer.parseInt(strLine.substring(12));
 //        System.out.println(enemyHeight);
         strLine = br.readLine();

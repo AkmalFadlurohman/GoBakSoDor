@@ -9,12 +9,12 @@ public class Frame extends JFrame {
   final private int WIDTH = 1280;
 
   public Frame() throws FileNotFoundException {
-    setName("Bakso");
+    setName("DorSoBakGo");
     setSize(WIDTH, HEIGHT);
     setVisible(true);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setResizable(false);
-    Game game = new Game(1);
+    Game game = new Game(3);
     add(game);
     addKeyListener(game);
   }
