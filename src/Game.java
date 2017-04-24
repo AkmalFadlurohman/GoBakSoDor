@@ -16,11 +16,15 @@ import javax.swing.Timer;
 @SuppressWarnings("serial")
 public class Game extends JPanel implements ActionListener, KeyListener {
 
-  static final int HEIGHT = 720;
+  static final int HEIGHT = 600;
   static final int WIDTH = 1280;
   Player player;
+  JLabel playerName;
+  JLabel playerLife;
+  JLabel playerScore;
   int speedPlayer;
   int radiusPlayer;
+
   Enemy[] enemyPool;
 
   public Game(int level) throws FileNotFoundException {
@@ -54,14 +58,15 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
 
     //Timer timer = new Timer(10, this);
-
     /*
-    JLabel playerName = new JLabel(" Name : " + player.getName() + " ");
-    JLabel playerLife = new JLabel(" Life : " + player.getLife() + " ");
-    JLabel playerScore = new JLabel("Score : " + player.getScore() + " ");
+    playerName = new JLabel(" Name : " + player.getName() + " ");
+    playerLife = new JLabel(" Life : " + player.getLife() + " ");
+    playerScore = new JLabel("Score : " + player.getScore() + " ");
+
     playerName.setFont(playerName.getFont().deriveFont(36.0f));
     playerLife.setFont(playerLife.getFont().deriveFont(36.0f));
     playerScore.setFont(playerScore.getFont().deriveFont(36.0f));
+
     add(playerName);
     add(playerLife);
     add(playerScore);
@@ -78,8 +83,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
       enemyPosX += 200;
       enemyPosY += 50;
       enemySpeed += 2;
-      if (dir == 0) dir = 1;
-      else if (dir == 1) dir = 0;
+      new Thread(enemyPool[i]).start();
     }
     //timer.start();
   }
@@ -94,8 +98,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     g2d.fillRect(0, 0, 100, HEIGHT);
     g2d.setColor(new Color(231, 76, 60));
     g2d.fillRect(WIDTH - 100, 0, 100, HEIGHT);
-    g2d.setColor(new Color(0));
-    g2d.fillOval(player.getPos().getX(), player.getPos().getY(), player.getRadius(), player.getRadius());
+    g2d.setColor(new Color(0xFF23D3));
+    g2d.fillOval(player.getPos().getX(), player.getPos().getY(), player.getDiameter(), player.getDiameter());
+    g2d.setColor(new Color(0x000000));
     for (Enemy anEnemyPool : enemyPool) {
       g2d.fillRect(anEnemyPool.getPos().getX(), anEnemyPool.getPos().getY(), anEnemyPool.getWidth(), anEnemyPool.getHeight());
     }
@@ -105,8 +110,12 @@ public class Game extends JPanel implements ActionListener, KeyListener {
   public void actionPerformed(ActionEvent actionEvent) {
     repaint();
     for (Enemy anEnemyPool : enemyPool) {
-      new Thread(anEnemyPool).start();
+      if (player.contain(anEnemyPool)) {
+        player.setLife(player.getLife() - 1);
+        player.setPos(0, 0);
+      }
     }
+    playerLife.setText(" Life : " + player.getLife() + " ");
   }
 
   @Override

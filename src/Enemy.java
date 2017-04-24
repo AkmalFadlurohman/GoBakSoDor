@@ -25,7 +25,14 @@ public class Enemy implements Movable, Runnable {
   }
 
   public void run() {
-    move(dir);
+    while (true) {
+      move(dir);
+      try {
+        Thread.sleep(10);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
   }
 
   @Override

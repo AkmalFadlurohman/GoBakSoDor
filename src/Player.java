@@ -8,7 +8,7 @@ public class Player implements Movable {
   private int life;
   private int speed;
   private Point pos;
-  private int radius;
+  private int diameter;
 
   public Player() {
     this.name = "";
@@ -16,26 +16,25 @@ public class Player implements Movable {
     this.life = 0;
     this.pos = new Point(0, 0);
     this.speed = 10;
-    this.radius = 5;
+    this.diameter = 5;
   }
 
-  public Player(String name, int score, int life, Point pos, int speed, int radius) {
+  public Player(String name, int score, int life, Point pos, int speed, int diameter) {
     this.name = name;
     this.score = score;
     this.life = life;
     this.pos = pos;
     this.speed = speed;
-    this.radius = radius;
+    this.diameter = diameter;
   }
 
-  public Player(String name, int score, int life, int x, int y, int speed, int
-    radius) {
+  public Player(String name, int score, int life, int x, int y, int speed, int diameter) {
     this.name = name;
     this.score = score;
     this.life = life;
     this.pos = new Point(x, y);
     this.speed = speed;
-    this.radius = radius;
+    this.diameter = diameter;
   }
 
   public String getName() {
@@ -92,12 +91,12 @@ public class Player implements Movable {
         }
         break;
       case 2:
-        if (pos.getY() + radius*2 - speed  < Game.HEIGHT) {
+        if (pos.getY() + diameter < Game.HEIGHT) {
           pos.setY(pos.getY() + speed);
         }
         break;
       case 3:
-        if (pos.getX() + radius < Game.WIDTH) {
+        if (pos.getX() + diameter < Game.WIDTH) {
           pos.setX(pos.getX() + speed);
         }
         break;
@@ -109,14 +108,23 @@ public class Player implements Movable {
     }
   }
 
-  public int getRadius() {
-    return radius;
+  public int getDiameter() {
+    return diameter;
   }
 
   public boolean contain(int x, int y) {
-    return pos.getX() == x && pos.getY() == y;
+    return pos.getX() <= x && pos.getY() <= y && pos.getX() + diameter >= x &&
+      pos.getY() + diameter >= y;
   }
+
   public boolean contain(Point pos) {
-    return this.pos.getX() == pos.getX() && this.pos.getY() == pos.getY();
+    return this.pos.getX() <= pos.getX() && this.pos.getY() <= pos.getY() &&
+      this.pos.getX() + diameter >= pos.getX() && this.pos.getY() + diameter >= pos
+      .getY();
+  }
+
+  public boolean contain(Enemy enemy) {
+    return ((pos.getX() + diameter >= enemy.getPos().getX() && pos.getX() <= enemy.getPos().getX() + enemy.getWidth()) &&
+           (pos.getY() + diameter >= enemy.getPos().getY() && pos.getY() <= enemy.getPos().getY() + enemy.getHeight()));
   }
 }
