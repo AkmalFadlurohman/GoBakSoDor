@@ -5,26 +5,23 @@ public class Player implements Movable{
   private String name;
   private int score;
   private int life;
-  private int posX;
-  private int posY;
   private int speed;
+  private Point pos;
 
   public Player() {
     this.name = "";
     this.score = 0;
     this.life = 0;
-    this.posX = 0;
-    this.posY = 0;
-    this.speed = 0;
+    this.pos.setX(0);
+    this.pos.setY(0);
+    this.speed = 10;
   }
 
-  public Player(String name, int score, int life, int posX, int posY, int
-    speed) {
+  public Player(String name, int score, int life, Point pos, int speed) {
     this.name = name;
     this.score = score;
     this.life = life;
-    this.posX = posX;
-    this.posY = posY;
+    this.pos = pos;
     this.speed = speed;
   }
 
@@ -52,20 +49,12 @@ public class Player implements Movable{
     this.life = life;
   }
 
-  public int getPosX() {
-    return posX;
+  public Point getPos() {
+    return pos;
   }
 
-  public void setPosX(int posX) {
-    this.posX = posX;
-  }
-
-  public int getPosY() {
-    return posY;
-  }
-
-  public void setPosY(int posY) {
-    this.posY = posY;
+  public void setPos(Point pos) {
+    this.pos = pos;
   }
 
   public int getSpeed() {
@@ -80,16 +69,16 @@ public class Player implements Movable{
   public void move(int code) {
     switch (code) {
       case 1 :
-        posX -= speed;
+        pos.setX(pos.getX()-speed);
         break;
       case 2 :
-        posY += speed;
+        pos.setY(pos.getY()+speed);
         break;
       case 3 :
-        posX += speed;
+        pos.setX(pos.getX()+speed);
         break;
       case 4 :
-        posY -= speed;
+        pos.setY(pos.getY()-speed);
         break;
     }
   }

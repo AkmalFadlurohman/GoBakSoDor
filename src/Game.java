@@ -2,17 +2,16 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Set;
 import java.util.TreeSet;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.Timer;
+import javax.swing.*;
+import java.awt.Dimension;
+
 
 @SuppressWarnings("serial")
 public class Game extends JPanel implements ActionListener, MouseListener, KeyListener {
 
   static final int HEIGHT = 600;
   static final int WIDTH = 800;
-  int x = 0;
-  int y = 0;
+  Point playerInitPos;
 
   Player player;
 
@@ -24,8 +23,10 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
     JFrame frame = new JFrame("DorSoBakGo");
     Timer timer = new Timer(10, this);
 
-    player = new Player("jekk", 0, 0, 0, 0, speedPlayer);
+    playerInitPos = new Point(0, 0);
+    player = new Player("jekk", 0, 0, playerInitPos, speedPlayer);
 
+    JLabel label = new JLabel("Label");
     frame.add(this);
     frame.setSize(WIDTH, HEIGHT);
     frame.setVisible(true);
@@ -35,7 +36,7 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
     enemyPool = new Enemy[enemyCount];
     int enemyPosX = HEIGHT/2;
     for (int i=0;i<enemyCount;i++) {
-      enemyPool[i] = new Enemy("Enemy1",30,100,10,enemyPosX,HEIGHT/2);
+      enemyPool[i] = new Enemy("Enemy1",30,100,10,new Point(enemyPosX,HEIGHT/2));
       enemyPosX += (r+100);
     }
     timer.start();
@@ -71,14 +72,10 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
     g2d.setColor(new Color(231, 76, 60));
     g2d.fillRect(WIDTH - 100,0,100, HEIGHT);
     g2d.setColor(new Color(0));
-    g2d.fillOval(player.getPosX(), player.getPosY(), r, r);
+    g2d.fillOval(player.getPos().getX(), player.getPos().getY(), r, r);
     for (int i=0;i<enemyPool.length;i++) {
-      g2d.fillRect(enemyPool[i].getPosX(), enemyPool[i].getPosY(), enemyPool[i].getWidth(), enemyPool[i].getHeight());
+      g2d.fillRect(enemyPool[i].getPos().getX(), enemyPool[i].getPos().getY(), enemyPool[i].getWidth(), enemyPool[i].getHeight());
     }
-  }
-
-  public static void main(String[] args) {
-    Game game = new Game(2);
   }
 
   @Override
@@ -120,20 +117,12 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
     } else {
       if (code == keyEvent.VK_LEFT) {
         player.move(1);
-        System.out.println("player move " + Integer.toString(code));
-        System.out.println("player loc " + player.getPosX());
       } else if (code == keyEvent.VK_DOWN) {
         player.move(2);
-        System.out.println("player move " + Integer.toString(code));
-        System.out.println("player loc " + player.getPosY());
       } else if (code == keyEvent.VK_RIGHT) {
         player.move(3);
-        System.out.println("player move " + Integer.toString(code));
-        System.out.println("player loc " + player.getPosY());
       } else if (code == keyEvent.VK_UP) {
         player.move(4);
-        System.out.println("player move " + Integer.toString(code));
-        System.out.println("player loc " + player.getPosX());
       }
     }
   }
