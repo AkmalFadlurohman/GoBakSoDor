@@ -5,29 +5,31 @@ public class Enemy implements Movable{
   private String name;
   private int width,height;
   private int speed;
-  private int posX,posY;
+  private Point pos;
 
   public Enemy() {
     name = "";
+    width = 0;
+    height = 0;
     speed = 0;
-    posY = 0;
+    pos.setX(0);
+    pos.setY(0);
   }
 
-  public Enemy(String name, int width,int height, int speed, int posX, int posY) {
+  public Enemy(String name, int width, int height, int speed, Point pos) {
     this.name = name;
     this.width = width;
     this.height = height;
     this.speed = speed;
-    this.posX = posX;
-    this.posY = posY;
+    this.pos = pos;
   }
 
   @Override
   public void move() {
-    if (posY > Game.HEIGHT - height || posY < 0) {
+    if (pos.getY() > Game.HEIGHT - height || pos.getY() < 0) {
       speed *= -1;
     }
-    posY += speed;
+    pos.setY(pos.getY() + speed);
   }
 
   public String getName() {
@@ -54,15 +56,11 @@ public class Enemy implements Movable{
     this.speed = speed;
   }
 
-  public int getPosX() { return posX; }
-
-  public void setPosX(int posX) { this.posX = posX; }
-
-  public int getPosY() {
-    return posY;
+  public Point getPos() {
+    return pos;
   }
 
-  public void setPosY(int posY) {
-    this.posY = posY;
+  public void setPos(Point pos) {
+    this.pos = pos;
   }
 }

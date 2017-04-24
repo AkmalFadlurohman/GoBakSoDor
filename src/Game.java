@@ -10,9 +10,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Set;
 import java.util.TreeSet;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.Timer;
+import javax.swing.*;
+import java.awt.Dimension;
+
 
 @SuppressWarnings("serial")
 public class Game extends JPanel implements ActionListener, MouseListener, KeyListener {
@@ -29,7 +29,7 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
   public Game(int enemyCount) {
     JFrame frame = new JFrame("DorSoBakGo");
     Timer timer = new Timer(10, this);
-
+    JLabel label = new JLabel("Label");
     frame.add(this);
     frame.setSize(WIDTH, HEIGHT);
     frame.setVisible(true);
@@ -39,7 +39,7 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
     enemyPool = new Enemy[enemyCount];
     int enemyPosX = HEIGHT/2;
     for (int i=0;i<enemyCount;i++) {
-      enemyPool[i] = new Enemy("Enemy1",30,100,10,enemyPosX,HEIGHT/2);
+      enemyPool[i] = new Enemy("Enemy1",30,100,10,new Point(enemyPosX,HEIGHT/2));
       enemyPosX += (r+100);
     }
     timer.start();
@@ -65,12 +65,8 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
     g2d.setColor(new Color(0));
     g2d.fillOval(x, y, r, r);
     for (int i=0;i<enemyPool.length;i++) {
-      g2d.fillRect(enemyPool[i].getPosX(), enemyPool[i].getPosY(), enemyPool[i].getWidth(), enemyPool[i].getHeight());
+      g2d.fillRect(enemyPool[i].getPos().getX(), enemyPool[i].getPos().getY(), enemyPool[i].getWidth(), enemyPool[i].getHeight());
     }
-  }
-
-  public static void main(String[] args) {
-    Game game = new Game(2);
   }
 
   @Override

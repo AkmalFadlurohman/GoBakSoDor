@@ -5,23 +5,21 @@ public class Player implements Movable{
   private String name;
   private int score;
   private int life;
-  private int posX;
-  private int posY;
+  private Point pos;
 
   public Player() {
     this.name = "";
     this.score = 0;
     this.life = 0;
-    this.posX = 0;
-    this.posY = 0;
+    this.pos.setX(0);
+    this.pos.setY(0);
   }
 
-  public Player(String name, int score, int life, int posX, int posY) {
+  public Player(String name, int score, int life, Point pos) {
     this.name = name;
     this.score = score;
     this.life = life;
-    this.posX = posX;
-    this.posY = posY;
+    this.pos = pos;
   }
 
   public String getName() {
@@ -48,20 +46,12 @@ public class Player implements Movable{
     this.life = life;
   }
 
-  public int getPosX() {
-    return posX;
+  public Point getPos() {
+    return pos;
   }
 
-  public void setPosX(int posX) {
-    this.posX = posX;
-  }
-
-  public int getPosY() {
-    return posY;
-  }
-
-  public void setPosY(int posY) {
-    this.posY = posY;
+  public void setPos(Point pos) {
+    this.pos = pos;
   }
 
   @Override
