@@ -6,9 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Set;
 import java.util.TreeSet;
+import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -26,8 +28,14 @@ public class Game extends JPanel implements ActionListener, KeyListener {
   JLabel playerLife;
   JLabel playerScore;
 
+  private BufferedImage image;
 
   public Game(int level) throws FileNotFoundException {
+    try {
+      image = ImageIO.read(new File("./images/GobakSodor.png"));
+    } catch (IOException ex) {
+
+    }
     String namaFile = "./level/" + Integer.toString(level) + ".txt";
     try {
       FileInputStream fstream = new FileInputStream(namaFile);
@@ -35,47 +43,32 @@ public class Game extends JPanel implements ActionListener, KeyListener {
       String strLine;
       strLine = br.readLine();
       int speedPlayer = Integer.parseInt(strLine.substring(12));
-//      System.out.println(speedPlayer);
       strLine = br.readLine();
       playerPosX = Integer.parseInt(strLine.substring(11));
-//      System.out.println(playerPosX);
       strLine = br.readLine();
       playerPosY = Integer.parseInt(strLine.substring(11));
-//      System.out.println(playerPosY);
       strLine = br.readLine();
       int diameter = Integer.parseInt(strLine.substring(15));
-//      System.out.println(diameter);
       strLine = br.readLine();
       int enemyCount = Integer.parseInt(strLine.substring(12));
-//      System.out.println(enemyCount);
       enemyPool = new Enemy[enemyCount];
       for (int i = 0; i < enemyCount; i++) {
         strLine = br.readLine();
         int enemyHeight = Integer.parseInt(strLine.substring(12));
-//        System.out.println(enemyHeight);
         strLine = br.readLine();
         int enemyWidth = Integer.parseInt(strLine.substring(11));
-//        System.out.println(enemyWidth);
         strLine = br.readLine();
         int enemyPosX = Integer.parseInt(strLine.substring(10));
-//        System.out.println(enemyPosX);
         strLine = br.readLine();
         int enemyPosY = Integer.parseInt(strLine.substring(10));
-//        System.out.println(enemyPosY);
         strLine = br.readLine();
         int enemySpeed = Integer.parseInt(strLine.substring(11));
-//        System.out.println(enemySpeed);
         strLine = br.readLine();
         int delay = Integer.parseInt(strLine.substring(11));
-//        System.out.println(delay);
         strLine = br.readLine();
         int dir = Integer.parseInt(strLine.substring(15));
-//        System.out.println(dir);
 
         enemyPool[i] = new Enemy(enemyWidth, enemyHeight, enemySpeed, enemyPosX, enemyPosY, dir, delay);
-//        enemyPosX += 200;
-//        enemyPosY += 50;
-//        enemySpeed += 2;
         new Thread(enemyPool[i]).start();
       }
 
@@ -105,8 +98,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
   public void paint(Graphics g) {
     super.paint(g);
     Graphics2D g2d = (Graphics2D) g;
-    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-            RenderingHints.VALUE_ANTIALIAS_ON);
+    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     g2d.setColor(new Color(52, 152, 219));
     g2d.fillRect(0, 0, 100, HEIGHT);
     g2d.setColor(new Color(231, 76, 60));
@@ -114,9 +106,12 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     g2d.setColor(new Color(0xFF23D3));
     g2d.fillOval(player.getPos().getX(), player.getPos().getY(), player.getDiameter(), player.getDiameter());
     g2d.setColor(new Color(0x000000));
+    g2d.drawRect(0, 0, WIDTH, HEIGHT);
+    g2d.drawLine(519, HEIGHT, 519, HEIGHT + 107);
     for (Enemy anEnemyPool : enemyPool) {
       g2d.fillRect(anEnemyPool.getPos().getX(), anEnemyPool.getPos().getY(), anEnemyPool.getWidth(), anEnemyPool.getHeight());
     }
+    g2d.drawImage(image, 0, 590, this);
   }
 
   @Override
@@ -126,9 +121,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
       if (player.contain(anEnemyPool)) {
         player.setLife(player.getLife() - 1);
         player.setPos(playerPosX, playerPosY);
+        playerLife.setText(" Life : " + player.getLife() + " ");
       }
     }
-    playerLife.setText(" Life : " + player.getLife() + " ");
   }
 
   @Override
