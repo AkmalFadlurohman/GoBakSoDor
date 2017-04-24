@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.*;
 import java.util.Set;
 import java.util.TreeSet;
 import javax.swing.JLabel;
@@ -17,18 +18,44 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
   static final int HEIGHT = 720;
   static final int WIDTH = 1280;
-
   Player player;
-
-  int speedPlayer = 15;
-  int radiusPlayer = 50;
+  int speedPlayer;
+  int radiusPlayer;
   Enemy[] enemyPool;
 
-  public Game(int enemyCount) {
-    Timer timer = new Timer(10, this);
+  public Game(int level) throws FileNotFoundException {
+    String namaFile = "./level/" + Integer.toString(level) + ".txt";
+    System.out.println(System.getProperty("user.dir"));
+    try {
+      FileInputStream fstream = new FileInputStream(namaFile);
+      BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+      String strLine;
+      int count = 0;
+      strLine = br.readLine();
+      speedPlayer = Integer.parseInt(strLine.substring(12));
+      strLine = br.readLine();
+      int playerPosX = Integer.parseInt(strLine.substring(11));
+      strLine = br.readLine();
+      int playerPosY = Integer.parseInt(strLine.substring(11));
 
-    player = new Player("jekk", 0, 3, new Point(0, HEIGHT / 2 - radiusPlayer), speedPlayer, radiusPlayer);
+//      while ((strLine = br.readLine()) != null) {
+//        strTemp[brs] = strLine;
+//        for (int j = 0; j < strLine.length(); j++) {
+//          map[brs][j] = strLine.charAt(j);
+//        }
+//        brs++;
+//      }
+      player = new Player("jekk", 0, 3, new Point(playerPosX, playerPosY), speedPlayer, radiusPlayer);
+      System.out.println(player.getPos().getX());
+      System.out.println(player.getPos().getY());
+    } catch (IOException ioe) {
+      System.out.println(ioe.getMessage());
+    }
 
+
+    //Timer timer = new Timer(10, this);
+
+    /*
     JLabel playerName = new JLabel(" Name : " + player.getName() + " ");
     JLabel playerLife = new JLabel(" Life : " + player.getLife() + " ");
     JLabel playerScore = new JLabel("Score : " + player.getScore() + " ");
@@ -38,7 +65,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     add(playerName);
     add(playerLife);
     add(playerScore);
+    */
 
+    int enemyCount = 10;
     enemyPool = new Enemy[enemyCount];
     int enemyPosX = HEIGHT / 2;
     int enemyPosY = HEIGHT / 2 - 30;
@@ -52,7 +81,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
       if (dir == 0) dir = 1;
       else if (dir == 1) dir = 0;
     }
-    timer.start();
+    //timer.start();
   }
 
   @Override

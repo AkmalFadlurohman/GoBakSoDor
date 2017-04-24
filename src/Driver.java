@@ -1,8 +1,10 @@
+import java.io.FileNotFoundException;
+
 /**
  * Created by Diki Ardian W (13515092) on 4/24/17.
  */
 public class Driver {
-  public static void main(String[] args) {
-    new Frame();
+  public static void main(String[] args) throws FileNotFoundException {
+    new Game(1);
   }
 }

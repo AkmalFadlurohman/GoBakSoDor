@@ -1,0 +1,12 @@
+playerSpeed=15
+playerPosX=0
+playerPosY=310
+playerDiameter=50
+jumlahEnemy=1
+enemyHeight=100
+enemyWidth=30
+enemyPosX=640
+enemyPosY=200
+enemySpeed=1
+enemyDelay=10
+enemyDirection=0
