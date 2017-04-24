@@ -21,7 +21,7 @@ public class Frame extends JFrame implements ActionListener {
 
   CardLayout layout = new CardLayout();
 
-  JPanel menu = new JPanel();
+  BackPanel menu = new BackPanel();
   JPanel panel = new JPanel();
   Game game;
 
@@ -31,11 +31,9 @@ public class Frame extends JFrame implements ActionListener {
 //    setContentPane(background);
 //    setLayout(new FlowLayout());
 
-
     setFocusable(true);
     panel.setLayout(layout);
     addButtons();
-
     add(panel);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setName("DorSoBakGo");
@@ -43,7 +41,6 @@ public class Frame extends JFrame implements ActionListener {
     setResizable(false);
     setLocationRelativeTo(null);
     setVisible(true);
-
   }
 
   private void addButtons() {
