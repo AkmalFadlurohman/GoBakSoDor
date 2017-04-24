@@ -12,16 +12,15 @@ public class Enemy implements Movable {
     width = 0;
     height = 0;
     speed = 0;
-    pos.setX(0);
-    pos.setY(0);
+    pos = new Point();
   }
 
-  public Enemy(String name, int width, int height, int speed, Point pos) {
+  public Enemy(String name, int width, int height, int speed, int posX, int posY) {
     this.name = name;
     this.width = width;
     this.height = height;
     this.speed = speed;
-    this.pos = pos;
+    this.pos = new Point(posX, posY);
   }
 
   @Override
