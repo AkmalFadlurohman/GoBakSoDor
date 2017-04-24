@@ -74,6 +74,14 @@ public class Game extends JPanel implements ActionListener, KeyListener {
   @Override
   public void actionPerformed(ActionEvent actionEvent) {
     repaint();
+    for (Enemy anEnemy : enemyPool) {
+      if (player.contain(anEnemy)) {
+        System.out.println("nabrak");
+      }
+      else {
+        System.out.println("ga nabrak");
+      }
+    }
   }
 
   @Override

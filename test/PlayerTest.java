@@ -22,12 +22,4 @@ class PlayerTest {
       ());
     assertTrue(p.contain(2, 3));
   }
-
-  @org.junit.jupiter.api.Test
-  void contain2() {
-    Player p = new Player();
-    p.setPos(2, 3);
-    Enemy e = new Enemy("", 51, 100, 10, 2, 3, 1);
-    assertTrue(p.contain(e));
-  }
 }
