@@ -1,13 +1,9 @@
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import com.sun.org.apache.xpath.internal.functions.FuncRound;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
 import javax.swing.JFrame;
@@ -19,8 +15,10 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
 
   final int HEIGHT = 600;
   final int WIDTH = 800;
-  int x = 0;
-  int y = 0;
+
+  Player player;
+  Enemy enemy;
+  ArrayList<Rectangle> arrEnemy;
 
   int r = 50;
   int e1 = HEIGHT/2;
@@ -31,6 +29,9 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
     JFrame frame = new JFrame("DorSoBakGo");
     Timer timer = new Timer(10, this);
 
+    player = new Player("jekk", 0, 0, 0, 0, speedPlayer);
+    enemy = new Enemy("e1", 100, speedEnemy, e1);
+
     frame.add(this);
     frame.setSize(WIDTH, HEIGHT);
     frame.setVisible(true);
@@ -38,14 +39,26 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
     frame.addKeyListener(this);
 
     timer.start();
+
+//    WindowListener exitListener = new WindowAdapter() {
+//
+//      @Override
+//      public void windowClosing(WindowEvent e) {
+//        if (Player.) {
+//          System.exit(0);
+//        }
+//      }
+//    };
+//    frame.addWindowListener(exitListener);
+
   }
 
-  private void moveBall(int code) {
-    if (code == 1) x -= speedPlayer;
-    else if (code == 2) y += speedPlayer;
-    else if (code == 3) x += speedPlayer;
-    else if (code == 4) y -= speedPlayer;
-  }
+//  private void moveBall(int code) {
+//    if (code == 1) player.setPosX(player.getPosX()-speedPlayer);
+//    else if (code == 2) player.setPosY(player.getPosY()+speedPlayer);
+//    else if (code == 3) player.setPosX(player.getPosX()+speedPlayer);
+//    else if (code == 4) player.setPosY(player.getPosY()-speedPlayer);
+//  }
 
   @Override
   public void paint(Graphics g) {
@@ -58,7 +71,7 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
     g2d.setColor(new Color(231, 76, 60));
     g2d.fillRect(WIDTH - 100,0,100, HEIGHT);
     g2d.setColor(new Color(0));
-    g2d.fillOval(x, y, r, r);
+    g2d.fillOval(player.getPosX(), player.getPosY(), r, r);
     g2d.fillRect(HEIGHT/2, e1, 30, 100);
   }
 
@@ -94,27 +107,35 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
     if (pressed.size() > 1 ) {
       Integer [] array = pressed.toArray(new Integer[] {});
       if (array[0] == keyEvent.VK_LEFT && array[1] == keyEvent.VK_DOWN) {
-        moveBall(1);
-        moveBall(2);
+        player.move(1);
+        player.move(2);
       } else if (array[0] == keyEvent.VK_LEFT && array[1] == keyEvent.VK_UP) {
-        moveBall(4);
-        moveBall(1);
+        player.move(4);
+        player.move(1);
       } else if (array[0] == keyEvent.VK_UP && array[1] == keyEvent.VK_RIGHT) {
-        moveBall(3);
-        moveBall(4);
+        player.move(3);
+        player.move(4);
       } else if (array[0] == keyEvent.VK_RIGHT && array[1] == keyEvent.VK_DOWN) {
-        moveBall(2);
-        moveBall(3);
+        player.move(2);
+        player.move(3);
       }
     } else {
       if (code == keyEvent.VK_LEFT) {
-        moveBall(1);
+        player.move(1);
+        System.out.println("player move " + Integer.toString(code));
+        System.out.println("player loc " + player.getPosX());
       } else if (code == keyEvent.VK_DOWN) {
-        moveBall(2);
+        player.move(2);
+        System.out.println("player move " + Integer.toString(code));
+        System.out.println("player loc " + player.getPosY());
       } else if (code == keyEvent.VK_RIGHT) {
-        moveBall(3);
+        player.move(3);
+        System.out.println("player move " + Integer.toString(code));
+        System.out.println("player loc " + player.getPosY());
       } else if (code == keyEvent.VK_UP) {
-        moveBall(4);
+        player.move(4);
+        System.out.println("player move " + Integer.toString(code));
+        System.out.println("player loc " + player.getPosX());
       }
     }
   }

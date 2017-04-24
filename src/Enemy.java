@@ -22,7 +22,7 @@ public class Enemy implements Movable{
   }
 
   @Override
-  public void move() {
+  public void move(int code) {
 
   }
 
