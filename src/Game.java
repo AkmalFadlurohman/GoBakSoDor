@@ -34,7 +34,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     try {
       image = ImageIO.read(new File("./images/GobakSodor.png"));
     } catch (IOException ex) {
-
+      System.out.println(ex.getMessage());
     }
     String namaFile = "./level/" + Integer.toString(level) + ".txt";
     try {
