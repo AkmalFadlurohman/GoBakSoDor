@@ -7,6 +7,7 @@ public class Player implements Movable {
   private int life;
   private int speed;
   private Point pos;
+  private int radius;
 
   public Player() {
     this.name = "";
@@ -17,12 +18,13 @@ public class Player implements Movable {
     this.speed = 10;
   }
 
-  public Player(String name, int score, int life, Point pos, int speed) {
+  public Player(String name, int score, int life, Point pos, int speed, int radius) {
     this.name = name;
     this.score = score;
     this.life = life;
     this.pos = pos;
     this.speed = speed;
+    this.radius = radius;
   }
 
   public String getName() {
@@ -69,17 +71,29 @@ public class Player implements Movable {
   public void move(int code) {
     switch (code) {
       case 1:
-        pos.setX(pos.getX() - speed);
+        if (pos.getX() > 0) {
+          pos.setX(pos.getX() - speed);
+        }
         break;
       case 2:
-        pos.setY(pos.getY() + speed);
+        if (pos.getY() + radius*2 - speed  < Game.HEIGHT) {
+          pos.setY(pos.getY() + speed);
+        }
         break;
       case 3:
-        pos.setX(pos.getX() + speed);
+        if (pos.getX() + radius < Game.WIDTH) {
+          pos.setX(pos.getX() + speed);
+        }
         break;
       case 4:
-        pos.setY(pos.getY() - speed);
+        if (pos.getY() > 0) {
+          pos.setY(pos.getY() - speed);
+        }
         break;
     }
+  }
+
+  public int getRadius() {
+    return radius;
   }
 }

@@ -15,18 +15,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-
 @SuppressWarnings("serial")
 public class Game extends JPanel implements ActionListener, MouseListener, KeyListener {
 
-  static final int HEIGHT = 600;
-  static final int WIDTH = 800;
+  static final int HEIGHT = 720;
+  static final int WIDTH = 1280;
   Point playerInitPos;
 
   Player player;
 
-  int r = 50;
   int speedPlayer = 15;
+  int radiusPlayer = 50;
   Enemy[] enemyPool;
 
   public Game(int enemyCount) {
@@ -34,7 +33,7 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
     Timer timer = new Timer(10, this);
 
     playerInitPos = new Point(0, 0);
-    player = new Player("jekk", 0, 0, playerInitPos, speedPlayer);
+    player = new Player("jekk", 0, 0, playerInitPos, speedPlayer, radiusPlayer);
 
     JLabel label = new JLabel("Label");
     frame.add(this);
@@ -42,12 +41,17 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
     frame.setVisible(true);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.addKeyListener(this);
+    frame.setResizable(false);
 
     enemyPool = new Enemy[enemyCount];
     int enemyPosX = HEIGHT / 2;
+    int enemyPosY = HEIGHT / 2 - 30;
+    int enemySpeed = 10;
     for (int i = 0; i < enemyCount; i++) {
-      enemyPool[i] = new Enemy("Enemy1", 30, 100, 10, new Point(enemyPosX, HEIGHT / 2));
-      enemyPosX += (r + 100);
+      enemyPool[i] = new Enemy("Enemy" + i, 30, 100, enemySpeed, new Point(enemyPosX, enemyPosY));
+      enemyPosX += 200;
+      enemyPosY += 50;
+      enemySpeed += 2;
     }
     timer.start();
 
@@ -64,13 +68,6 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
 
   }
 
-//  private void moveBall(int code) {
-//    if (code == 1) player.setPosX(player.getPosX()-speedPlayer);
-//    else if (code == 2) player.setPosY(player.getPosY()+speedPlayer);
-//    else if (code == 3) player.setPosX(player.getPosX()+speedPlayer);
-//    else if (code == 4) player.setPosY(player.getPosY()-speedPlayer);
-//  }
-
   @Override
   public void paint(Graphics g) {
     super.paint(g);
@@ -82,7 +79,7 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
     g2d.setColor(new Color(231, 76, 60));
     g2d.fillRect(WIDTH - 100, 0, 100, HEIGHT);
     g2d.setColor(new Color(0));
-    g2d.fillOval(player.getPos().getX(), player.getPos().getY(), r, r);
+    g2d.fillOval(player.getPos().getX(), player.getPos().getY(), player.getRadius(), player.getRadius());
     for (Enemy anEnemyPool : enemyPool) {
       g2d.fillRect(anEnemyPool.getPos().getX(), anEnemyPool.getPos().getY(), anEnemyPool.getWidth(), anEnemyPool.getHeight());
     }
@@ -91,7 +88,6 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
   @Override
   public void actionPerformed(ActionEvent actionEvent) {
     repaint();
-    //moveEnemy();
     for (Enemy anEnemyPool : enemyPool) {
       anEnemyPool.move(0);
     }
