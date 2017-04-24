@@ -1,5 +1,3 @@
-import java.awt.*;
-
 /**
  * Created by Diki Ardian W (13515092) on 4/23/17.
  */
@@ -93,7 +91,7 @@ public class Player implements Movable {
         }
         break;
       case 2:
-        if (pos.getY() + diameter *2 - speed  < Game.HEIGHT) {
+        if (pos.getY() + diameter < Game.HEIGHT) {
           pos.setY(pos.getY() + speed);
         }
         break;
@@ -126,12 +124,7 @@ public class Player implements Movable {
   }
 
   public boolean contain(Enemy enemy) {
-    int ePosX = enemy.getPos().getX();
-    int ePosY = enemy.getPos().getY();
-    Rectangle ebody = new Rectangle(enemy.getHeight(), enemy.getWidth(), ePosX,
-      ePosY);
-    Rectangle pbody = new Rectangle(diameter, diameter, pos.getX(), pos.getY());
-
-     return pbody.intersects(ebody);
+    return ((pos.getX() + diameter >= enemy.getPos().getX() && pos.getX() <= enemy.getPos().getX() + enemy.getWidth()) &&
+           (pos.getY() + diameter >= enemy.getPos().getY() && pos.getY() <= enemy.getPos().getY() + enemy.getHeight()));
   }
 }

@@ -19,6 +19,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
   static final int WIDTH = 1280;
 
   Player player;
+  JLabel playerName;
+  JLabel playerLife;
+  JLabel playerScore;
 
   int speedPlayer = 15;
   int radiusPlayer = 50;
@@ -29,12 +32,14 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
     player = new Player("jekk", 0, 3, new Point(0, HEIGHT / 2 - radiusPlayer), speedPlayer, radiusPlayer);
 
-    JLabel playerName = new JLabel(" Name : " + player.getName() + " ");
-    JLabel playerLife = new JLabel(" Life : " + player.getLife() + " ");
-    JLabel playerScore = new JLabel("Score : " + player.getScore() + " ");
+    playerName = new JLabel(" Name : " + player.getName() + " ");
+    playerLife = new JLabel(" Life : " + player.getLife() + " ");
+    playerScore = new JLabel("Score : " + player.getScore() + " ");
+
     playerName.setFont(playerName.getFont().deriveFont(36.0f));
     playerLife.setFont(playerLife.getFont().deriveFont(36.0f));
     playerScore.setFont(playerScore.getFont().deriveFont(36.0f));
+
     add(playerName);
     add(playerLife);
     add(playerScore);
@@ -64,8 +69,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     g2d.fillRect(0, 0, 100, HEIGHT);
     g2d.setColor(new Color(231, 76, 60));
     g2d.fillRect(WIDTH - 100, 0, 100, HEIGHT);
-    g2d.setColor(new Color(0));
+    g2d.setColor(new Color(0xFF23D3));
     g2d.fillOval(player.getPos().getX(), player.getPos().getY(), player.getDiameter(), player.getDiameter());
+    g2d.setColor(new Color(0x000000));
     for (Enemy anEnemyPool : enemyPool) {
       g2d.fillRect(anEnemyPool.getPos().getX(), anEnemyPool.getPos().getY(), anEnemyPool.getWidth(), anEnemyPool.getHeight());
     }
@@ -74,6 +80,13 @@ public class Game extends JPanel implements ActionListener, KeyListener {
   @Override
   public void actionPerformed(ActionEvent actionEvent) {
     repaint();
+    for (Enemy anEnemyPool : enemyPool) {
+      if (player.contain(anEnemyPool)) {
+        player.setLife(player.getLife() - 1);
+        player.setPos(0, 0);
+      }
+    }
+    playerLife.setText(" Life : " + player.getLife() + " ");
   }
 
   @Override
