@@ -1,6 +1,3 @@
-import Movable.Enemy;
-import Movable.Player;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -44,7 +41,7 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
 //
 //      @Override
 //      public void windowClosing(WindowEvent e) {
-//        if (Movable.Player.) {
+//        if (Player.) {
 //          System.exit(0);
 //        }
 //      }
