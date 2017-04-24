@@ -1,3 +1,5 @@
+import Movable.Player;
+
 /**
  * Created by akmalfadlurohman on 4/23/17.
  */

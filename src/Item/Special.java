@@ -1,3 +1,5 @@
+import Movable.Enemy;
+
 /**
  * Created by akmalfadlurohman on 4/23/17.
  */
