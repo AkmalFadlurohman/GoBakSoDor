@@ -1,3 +1,5 @@
+package Movable;
+
 /**
  * Created by Diki Ardian W (13515092) on 4/23/17.
  */
@@ -19,6 +21,7 @@ public class Enemy implements Movable{
     this.length = length;
     this.speed = speed;
     this.posY = posY;
+
   }
 
   @Override

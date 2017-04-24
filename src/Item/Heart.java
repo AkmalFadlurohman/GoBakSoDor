@@ -1,3 +1,5 @@
+package Item;
+
 import Movable.Player;
 
 /**
@@ -5,7 +7,7 @@ import Movable.Player;
  */
 public class Heart extends Item {
   public Heart() {
-    super("Heart","Add additional life to player",0,0);
+    super("Item.Heart","Add additional life to player",0,0);
   }
   public void applyEffect(Player P) {
     P.setLife(P.getLife()+1);

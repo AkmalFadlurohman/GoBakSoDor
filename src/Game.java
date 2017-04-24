@@ -1,8 +1,8 @@
-import com.sun.org.apache.xpath.internal.functions.FuncRound;
+import Movable.Enemy;
+import Movable.Player;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
@@ -44,7 +44,7 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
 //
 //      @Override
 //      public void windowClosing(WindowEvent e) {
-//        if (Player.) {
+//        if (Movable.Player.) {
 //          System.exit(0);
 //        }
 //      }
