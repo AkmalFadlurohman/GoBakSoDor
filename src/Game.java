@@ -1,7 +1,4 @@
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -11,7 +8,6 @@ import java.io.*;
 import java.util.Set;
 import java.util.TreeSet;
 import javax.imageio.ImageIO;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -24,18 +20,20 @@ public class Game extends JPanel implements ActionListener, KeyListener {
   Enemy[] enemyPool;
   int playerPosX;
   int playerPosY;
-  JLabel playerName;
-  JLabel playerLife;
-  JLabel playerScore;
+  int level;
 
   private BufferedImage image;
 
   public Game(int level) throws FileNotFoundException {
+
+    this.level = level;
+
     try {
       image = ImageIO.read(new File("./images/GobakSodor.png"));
     } catch (IOException ex) {
       System.out.println(ex.getMessage());
     }
+
     String namaFile = "./level/" + Integer.toString(level) + ".txt";
     try {
       FileInputStream fstream = new FileInputStream(namaFile);
@@ -81,17 +79,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
     Timer timer = new Timer(10, this);
 
-    playerName = new JLabel(" Name : " + player.getName() + " ");
-    playerLife = new JLabel(" Life : " + player.getLife() + " ");
-    playerScore = new JLabel("Score : " + player.getScore() + " ");
-
-    playerName.setFont(playerName.getFont().deriveFont(36.0f));
-    playerLife.setFont(playerLife.getFont().deriveFont(36.0f));
-    playerScore.setFont(playerScore.getFont().deriveFont(36.0f));
-
-    add(playerName);
-    add(playerLife);
-    add(playerScore);
     timer.start();
   }
 
@@ -108,11 +95,16 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     g2d.fillOval(player.getPos().getX(), player.getPos().getY(), player.getDiameter(), player.getDiameter());
     g2d.setColor(new Color(0x000000));
     g2d.drawRect(0, 0, WIDTH, HEIGHT);
-    g2d.drawLine(519, HEIGHT, 519, HEIGHT + 107);
+    g2d.drawLine(519, HEIGHT, 519, HEIGHT + 120);
     for (Enemy anEnemyPool : enemyPool) {
       g2d.fillRect(anEnemyPool.getPos().getX(), anEnemyPool.getPos().getY(), anEnemyPool.getWidth(), anEnemyPool.getHeight());
     }
-    g2d.drawImage(image, 0, 590, this);
+    g2d.drawImage(image, 0, 607, this);
+    g2d.setFont(new Font("Ubuntu", Font.PLAIN, 40  ));
+    g2d.drawString("Name: " + player.getName() , 530, HEIGHT + 50);
+    g2d.drawString("Score: " + player.getScore() , 530, HEIGHT + 90);
+    g2d.drawString("Life: " + player.getLife() , 900, HEIGHT + 50);
+    g2d.drawString("Level: " + level , 900, HEIGHT + 90);
   }
 
   @Override
@@ -122,7 +114,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
       if (player.contain(anEnemyPool)) {
         player.setLife(player.getLife() - 1);
         player.setPos(playerPosX, playerPosY);
-        playerLife.setText(" Life : " + player.getLife() + " ");
       }
     }
   }
@@ -164,6 +155,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
       } else if (code == KeyEvent.VK_UP) {
         player.move(4);
       }
+    }
+    if (code == KeyEvent.VK_ESCAPE) {
+      System.exit(2);
     }
   }
 
