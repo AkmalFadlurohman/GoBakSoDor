@@ -94,7 +94,7 @@ public class Frame extends JFrame implements ActionListener {
       layout.show(mainPanel, "game");
     } else if (source == mainMenuButton || source == okButton) {
       if (game != null) {
-        Game.stopTimer();
+        game.stopTimer();
         Game.setLevel(1);
         Player.setScore(0);
         Player.setLife(3);

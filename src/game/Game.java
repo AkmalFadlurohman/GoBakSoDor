@@ -8,19 +8,18 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-
 import movable.Enemy;
 import movable.Player;
 import tile.Tile;
 
 @SuppressWarnings("serial")
-public class Game extends JPanel{
+public class Game extends JPanel {
 
   enum Dir {
+
+
     LEFT("Left", KeyEvent.VK_LEFT, -1, 0),
     RIGHT("Right", KeyEvent.VK_RIGHT, 1, 0),
     UP("Up", KeyEvent.VK_UP, 0, -1),
@@ -30,21 +29,26 @@ public class Game extends JPanel{
     private int keyCode;
     private int deltaX;
     private int deltaY;
+
     private Dir(String name, int keyCode, int deltaX, int deltaY) {
       this.name = name;
       this.keyCode = keyCode;
       this.deltaX = deltaX;
       this.deltaY = deltaY;
     }
+
     public String getName() {
       return name;
     }
+
     public int getKeyCode() {
       return keyCode;
     }
+
     public int getDeltaX() {
       return deltaX;
     }
+
     public int getDeltaY() {
       return deltaY;
     }
@@ -66,7 +70,6 @@ public class Game extends JPanel{
   Tile finish = new Tile();
 
   private BufferedImage image;
-  static Timer timer;
 
   public Game() throws FileNotFoundException {
 
@@ -162,11 +165,11 @@ public class Game extends JPanel{
       g2d.fillRect(anEnemyPool.getPos().getX(), anEnemyPool.getPos().getY(), anEnemyPool.getWidth(), anEnemyPool.getHeight());
     }
     g2d.drawImage(image, 0, 607, this);
-    g2d.setFont(new Font("Ubuntu", Font.PLAIN, 40  ));
-    g2d.drawString("Name: " + player.getName() , 530, HEIGHT + 50);
-    g2d.drawString("Score: " + player.getScore() , 530, HEIGHT + 90);
-    g2d.drawString("Life: " + player.getLife() , 900, HEIGHT + 50);
-    g2d.drawString("Level: " + level , 900, HEIGHT + 90);
+    g2d.setFont(new Font("Ubuntu", Font.PLAIN, 40));
+    g2d.drawString("Name: " + player.getName(), 530, HEIGHT + 50);
+    g2d.drawString("Score: " + player.getScore(), 530, HEIGHT + 90);
+    g2d.drawString("Life: " + player.getLife(), 900, HEIGHT + 50);
+    g2d.drawString("Level: " + level, 900, HEIGHT + 90);
   }
 
   private class AnimationListener implements ActionListener {
@@ -176,20 +179,32 @@ public class Game extends JPanel{
       int moveCode = 0;
       for (Dir dir : Dir.values()) {
         if (dirMap.get(dir)) {
-          switch (dir.getName()) {
-            case "Left":
-              moveCode = 1;
-              break;
-            case "Down":
-              moveCode = 2;
-              break;
-            case "Right":
-              moveCode = 3;
-              break;
-            case "Up":
-              moveCode = 4;
-              break;
+          if (dir.getName() == "Left") {
+            player.move(1);
           }
+          if (dir.getName() == "Down") {
+            player.move(2);
+          }
+          if (dir.getName() == "Right") {
+            player.move(3);
+          }
+          if (dir.getName() == "Up") {
+            player.move(4);
+          }
+//          switch (dir.getName()) {
+//            case "Left":
+//              moveCode = 1;
+//              break;
+//            case "Down":
+//              moveCode = 2;
+//              break;
+//            case "Right":
+//              moveCode = 3;
+//              break;
+//            case "Up":
+//              moveCode = 4;
+//              break;
+//          }
         }
       }
 
@@ -208,7 +223,7 @@ public class Game extends JPanel{
 
         Player.setScore(Player.getScore() + 1);
         level++;
-//        timer.stop();
+        animationTimer.stop();
         Frame.layout.show(Frame.mainPanel, "NextLevel");
       }
 
@@ -265,7 +280,7 @@ public class Game extends JPanel{
     Game.level = level;
   }
 
-  public static void stopTimer() {
-    timer.stop();
+  public void stopTimer() {
+    animationTimer.stop();
   }
 }
