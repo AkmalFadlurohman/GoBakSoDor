@@ -123,6 +123,11 @@ public class Player implements Movable {
       .getY();
   }
 
+  public boolean contain(int x, int y, int width, int heigth) {
+    return ((pos.getX() + diameter >= x && pos.getX() <= x + width) &&
+      (pos.getY() + diameter >= y && pos.getY() <= y + heigth));
+  }
+
   public boolean contain(Enemy enemy) {
     return ((pos.getX() + diameter >= enemy.getPos().getX() && pos.getX() <= enemy.getPos().getX() + enemy.getWidth()) &&
            (pos.getY() + diameter >= enemy.getPos().getY() && pos.getY() <= enemy.getPos().getY() + enemy.getHeight()));
