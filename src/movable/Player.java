@@ -27,7 +27,7 @@ public class Player implements Movable {
   public Player(String name, Point pos, int speed, int diameter) {
     this.name = name;
     this.pos = pos;
-    this.speed = speed;
+    this.speed = speed/2;
     this.diameter = diameter;
   }
 
