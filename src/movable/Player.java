@@ -2,6 +2,7 @@ package movable;
 
 import game.Game;
 import game.Point;
+import item.*;
 
 /**
  * Created by Diki Ardian W (13515092) on 4/23/17.
@@ -142,4 +143,8 @@ public class Player implements Movable {
             (pos.getY() + diameter >= enemy.getPos().getY() && pos.getY() <= enemy.getPos().getY() + enemy.getHeight()));
   }
 
+  public boolean contain(Item item) {
+    return ((pos.getX() + diameter >= item.getPos().getX() && pos.getX() <= item.getPos().getX() + Item.width) &&
+            (pos.getY() + diameter >= item.getPos().getY() && pos.getY() <= item.getPos().getY() + Item.height));
+  }
 }

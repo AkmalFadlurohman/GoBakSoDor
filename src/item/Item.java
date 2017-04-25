@@ -1,26 +1,28 @@
 package item;
+import game.*;
+import movable.*;
+
+import java.awt.image.BufferedImage;
+
 
 /**
  * Created by akmalfadlurohman on 4/23/17.
  */
 public abstract class Item {
 
-  int locX, locY;
   private String name, effect;
+  private Point pos;
+  public static final int width = 30;
+  public static final int height = 30;
 
-  public Item(String name, String effect, int x, int y) {
+  public Item(String name, String effect, int posX, int posY) {
     this.name = name;
     this.effect = effect;
-    locX = x;
-    locY = y;
+    this.pos = new Point(posX, posY);
   }
 
   public String getEffect() {
     return effect;
-  }
-
-  public void setEffect(String effect) {
-    this.effect = effect;
   }
 
   public String getName() {
@@ -31,19 +33,22 @@ public abstract class Item {
     this.name = name;
   }
 
-  public int getLocX() {
-    return locX;
+  public void setEffect(String effect) {
+    this.effect = effect;
   }
 
-  public void setLocX(int locX) {
-    this.locX = locX;
+  public Point getPos() {
+    return pos;
   }
 
-  public int getLocY() {
-    return locY;
+  public void setPos(Point pos) {
+    this.pos = pos;
   }
 
-  public void setLocY(int locY) {
-    this.locY = locY;
-  }
+  abstract public BufferedImage getImage();
+
+  abstract public void applyEffect(Enemy[] E);
+
+  abstract public  void applyEffect(Player p);
+
 }

@@ -17,11 +17,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import movable.Enemy;
 import movable.Player;
 import tile.Tile;
+import item.*;
+
 
 @SuppressWarnings("serial")
 public class Game extends JPanel {
@@ -33,6 +36,7 @@ public class Game extends JPanel {
   static int level = 1;
   Player player;
   Enemy[] enemyPool;
+  ArrayList<Item> itemPool;
   int playerPosX;
   int playerPosY;
   Tile start = new Tile();
@@ -109,7 +113,10 @@ public class Game extends JPanel {
     } catch (IOException ioe) {
       System.out.println(ioe.getMessage());
     }
-
+    itemPool = new ArrayList<Item>();
+    itemPool.add(new Heart(200,200));
+    itemPool.add(new Special(200,300));
+    itemPool.add(new BonusScore(200,400));
     for (Dir dir : Dir.values()) {
       dirMap.put(dir, Boolean.FALSE);
     }
@@ -149,6 +156,9 @@ public class Game extends JPanel {
     g2d.drawString("Score: " + player.getScore(), 530, HEIGHT + 90);
     g2d.drawString("Life: " + player.getLife(), 900, HEIGHT + 50);
     g2d.drawString("Level: " + level, 900, HEIGHT + 90);
+    for (Item anItem : itemPool) {
+      g2d.drawImage(anItem.getImage(), anItem.getPos().getX(), anItem.getPos().getY(), Item.width, Item.height, this);
+    }
   }
 
   private void setKeyBindings() {
@@ -249,8 +259,23 @@ public class Game extends JPanel {
         animationTimer.stop();
         Frame.layout.show(Frame.mainPanel, "NextLevel");
       }
-
-      if (player.gameOver()) {
+      for (int i=0;i<itemPool.size();i++) {
+        if (player.contain(itemPool.get(i))) {
+          itemPool.get(i).applyEffect(player);
+          itemPool.get(i).applyEffect(enemyPool);
+        /*if (itemPool.get(i).getClass().getSimpleName() == "Heart") {
+          itemPool.get(i).applyEffect(player);
+        }
+        else if (itemPool.get(i).getClass().getSimpleName() == "BonusScore") {
+          itemPool.get(i).applyEffect(player);
+        }
+        else if (itemPool.get(i).getClass().getSimpleName() == "Special") {
+          itemPool.get(i).applyEffect(enemyPool);
+        }*/
+          itemPool.remove(i);
+        }
+      }
+        if (player.gameOver()) {
         //TODO: MASUKIN KE HIGHSCORE
         animationTimer.stop();
         Frame.layout.show(Frame.mainPanel, "GameOver");
