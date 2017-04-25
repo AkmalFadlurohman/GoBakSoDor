@@ -1,13 +1,9 @@
 package game;
 
-import movable.Enemy;
-import movable.Player;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.EnumMap;
@@ -16,6 +12,10 @@ import java.util.Set;
 import java.util.TreeSet;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import movable.Enemy;
+import movable.Player;
+import tile.Tile;
 
 @SuppressWarnings("serial")
 public class Game extends JPanel{
@@ -59,21 +59,16 @@ public class Game extends JPanel{
   Enemy[] enemyPool;
   int playerPosX;
   int playerPosY;
-  int level;
-  int startPosX;
-  int startPosY;
-  int startHeight;
-  int startWidth;
-  int finishPosX;
-  int finishPosY;
-  int finishHeight;
-  int finishWidth;
-  private BufferedImage image;
   private Timer animationTimer = new Timer(10, new AnimationListener());
+  static int level = 1;
 
-  public Game(int level) throws FileNotFoundException {
+  Tile start = new Tile();
+  Tile finish = new Tile();
 
-    this.level = level;
+  private BufferedImage image;
+  static Timer timer;
+
+  public Game() throws FileNotFoundException {
 
     try {
       image = ImageIO.read(new File("./images/GobakSodor.png"));
@@ -81,27 +76,28 @@ public class Game extends JPanel{
       System.out.println(ex.getMessage());
     }
 
-    String namaFile = "./level/" + Integer.toString(level) + ".txt";
+    String namaFile = "./level/" + Integer.toString(Game.level) + ".txt";
     try {
+
       FileInputStream fstream = new FileInputStream(namaFile);
       BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
       String strLine;
       strLine = br.readLine();
-      startPosX = Integer.parseInt(strLine.substring(10));
+      start.setPosX(Integer.parseInt(strLine.substring(10)));
       strLine = br.readLine();
-      startPosY = Integer.parseInt(strLine.substring(10));
+      start.setPosY(Integer.parseInt(strLine.substring(10)));
       strLine = br.readLine();
-      startHeight = Integer.parseInt(strLine.substring(12));
+      start.setHeight(Integer.parseInt(strLine.substring(12)));
       strLine = br.readLine();
-      startWidth = Integer.parseInt(strLine.substring(11));
+      start.setWidth(Integer.parseInt(strLine.substring(11)));
       strLine = br.readLine();
-      finishPosX = Integer.parseInt(strLine.substring(11));
+      finish.setPosX(Integer.parseInt(strLine.substring(11)));
       strLine = br.readLine();
-      finishPosY = Integer.parseInt(strLine.substring(11));
+      finish.setPosY(Integer.parseInt(strLine.substring(11)));
       strLine = br.readLine();
-      finishHeight = Integer.parseInt(strLine.substring(13));
+      finish.setHeight(Integer.parseInt(strLine.substring(13)));
       strLine = br.readLine();
-      finishWidth = Integer.parseInt(strLine.substring(12));
+      finish.setWidth(Integer.parseInt(strLine.substring(12)));
       strLine = br.readLine();
       int speedPlayer = Integer.parseInt(strLine.substring(12));
       strLine = br.readLine();
@@ -145,10 +141,7 @@ public class Game extends JPanel{
     }
     setKeyBindings();
     animationTimer.start();
-
-//    Timer timer = new Timer(10, this);
-
-//    timer.start();
+//    timer = new Timer(10, this);
   }
 
   @Override
@@ -157,9 +150,9 @@ public class Game extends JPanel{
     Graphics2D g2d = (Graphics2D) g;
     g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     g2d.setColor(new Color(52, 152, 219));
-    g2d.fillRect(startPosX, startPosY, startWidth, startHeight);
+    g2d.fillRect(start.getPosX(), start.getPosY(), start.getWidth(), start.getHeight());
     g2d.setColor(new Color(231, 76, 60));
-    g2d.fillRect(finishPosX, finishPosY, finishWidth, finishHeight);
+    g2d.fillRect(finish.getPosX(), finish.getPosY(), finish.getWidth(), finish.getHeight());
     g2d.setColor(new Color(0xFF23D3));
     g2d.fillOval(player.getPos().getX(), player.getPos().getY(), player.getDiameter(), player.getDiameter());
     g2d.setColor(new Color(0x000000));
@@ -184,16 +177,16 @@ public class Game extends JPanel{
       for (Dir dir : Dir.values()) {
         if (dirMap.get(dir)) {
           switch (dir.getName()) {
-            case "Left" :
+            case "Left":
               moveCode = 1;
               break;
-            case "Down" :
+            case "Down":
               moveCode = 2;
               break;
-            case "Right" :
+            case "Right":
               moveCode = 3;
               break;
-            case "Up" :
+            case "Up":
               moveCode = 4;
               break;
           }
@@ -211,9 +204,18 @@ public class Game extends JPanel{
         }
       }
 
-//    if (player.contain(finishPosX, finishPosY, finishWidth, finishHeight)) {
-//      movable.Player.setScore(movable.Player.getScore() + );
-//    }
+      if (player.contain(finish.getPosX(), finish.getPosY(), finish.getWidth(), finish.getHeight())) {
+
+        Player.setScore(Player.getScore() + 1);
+        level++;
+//        timer.stop();
+        Frame.layout.show(Frame.mainPanel, "NextLevel");
+      }
+
+      if (player.gameOver()) {
+        //TODO: MASUKIN KE HIGHSCORE
+        Frame.layout.show(Frame.mainPanel, "GameOver");
+      }
     }
   }
 
@@ -253,56 +255,17 @@ public class Game extends JPanel{
         dirMap.put(dir, Boolean.FALSE);
       }
     }
-
   }
 
-//  @Override
-//  public void keyTyped(KeyEvent keyEvent) {
-//
-//  }
+  public static int getLevel() {
+    return level;
+  }
 
-  Set<Integer> pressed = new TreeSet<>();
+  public static void setLevel(int level) {
+    Game.level = level;
+  }
 
-//  @Override
-//  public void keyPressed(KeyEvent keyEvent) {
-//    int code = keyEvent.getKeyCode();
-//    pressed.add(code);
-//
-//    if (pressed.size() > 1) {
-//      Integer[] array = pressed.toArray(new Integer[]{});
-//      if ((array[0] == KeyEvent.VK_LEFT) && (array[1] == KeyEvent.VK_DOWN)) {
-//        player.move(1);
-//        player.move(2);
-//      } else if (array[0] == KeyEvent.VK_LEFT && array[1] == KeyEvent.VK_UP) {
-//        player.move(4);
-//        player.move(1);
-//      } else if (array[0] == KeyEvent.VK_UP && array[1] == KeyEvent.VK_RIGHT) {
-//        player.move(3);
-//        player.move(4);
-//      } else if (array[0] == KeyEvent.VK_RIGHT && array[1] == KeyEvent.VK_DOWN) {
-//        player.move(2);
-//        player.move(3);
-//      }
-//    } else {
-//      if (code == KeyEvent.VK_LEFT) {
-//        player.move(1);
-//      } else if (code == KeyEvent.VK_DOWN) {
-//        player.move(2);
-//      } else if (code == KeyEvent.VK_RIGHT) {
-//        player.move(3);
-//      } else if (code == KeyEvent.VK_UP) {
-//        player.move(4);
-//      }
-//    }
-//    if (code == KeyEvent.VK_ESCAPE) {
-//      System.exit(2);
-//    }
-//  }
-//
-//  @Override
-//  public void keyReleased(KeyEvent keyEvent) {
-//    pressed.remove(keyEvent.getKeyCode());
-//  }
-
-
+  public static void stopTimer() {
+    timer.stop();
+  }
 }

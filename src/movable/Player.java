@@ -136,4 +136,9 @@ public class Player implements Movable {
     return ((pos.getX() + diameter >= enemy.getPos().getX() && pos.getX() <= enemy.getPos().getX() + enemy.getWidth()) &&
            (pos.getY() + diameter >= enemy.getPos().getY() && pos.getY() <= enemy.getPos().getY() + enemy.getHeight()));
   }
+
+  public static boolean gameOver() {
+    return (life == 0);
+  }
+
 }

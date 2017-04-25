@@ -8,11 +8,11 @@ import javax.swing.JPanel;
 /**
  * Created by um on 25/04/17.
  */
-public class BackPanel extends JPanel {
+public class GameOverPanel extends JPanel {
   private Image background;
 
-  public BackPanel() {
-    background = new ImageIcon("./images/Castle.jpg").getImage();
+  public GameOverPanel() {
+    background = new ImageIcon("./images/Gameover.jpg").getImage();
   }
 
   @Override
