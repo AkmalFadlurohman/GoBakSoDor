@@ -14,7 +14,7 @@ jumlahEnemy=2
 #1
 enemyHeight=100
 enemyWidth=30
-enemyPosX=640
+enemyPosX=440
 enemyPosY=200
 enemySpeed=5
 enemyDelay=5
