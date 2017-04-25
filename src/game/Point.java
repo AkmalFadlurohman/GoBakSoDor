@@ -1,3 +1,5 @@
+package game;
+
 /**
  * Created by Diki Ardian W (13515092) on 4/24/17.
  */

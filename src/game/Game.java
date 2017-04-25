@@ -1,3 +1,8 @@
+package game;
+
+import movable.Enemy;
+import movable.Player;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,8 +19,8 @@ import javax.swing.Timer;
 @SuppressWarnings("serial")
 public class Game extends JPanel implements ActionListener, KeyListener {
 
-  static final int HEIGHT = 600;
-  static final int WIDTH = 1280;
+  public static final int HEIGHT = 600;
+  public static final int WIDTH = 1280;
   Player player;
   Enemy[] enemyPool;
   int playerPosX;
@@ -141,7 +146,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     }
 
 //    if (player.contain(finishPosX, finishPosY, finishWidth, finishHeight)) {
-//      Player.setScore(Player.getScore() + );
+//      movable.Player.setScore(movable.Player.getScore() + );
 //    }
   }
 
