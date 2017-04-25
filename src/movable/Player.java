@@ -1,3 +1,7 @@
+package movable;
+
+import game.*;
+
 /**
  * Created by Diki Ardian W (13515092) on 4/23/17.
  */
@@ -121,6 +125,11 @@ public class Player implements Movable {
     return this.pos.getX() <= pos.getX() && this.pos.getY() <= pos.getY() &&
       this.pos.getX() + diameter >= pos.getX() && this.pos.getY() + diameter >= pos
       .getY();
+  }
+
+  public boolean contain(int x, int y, int width, int heigth) {
+    return ((pos.getX() + diameter >= x && pos.getX() <= x + width) &&
+      (pos.getY() + diameter >= y && pos.getY() <= y + heigth));
   }
 
   public boolean contain(Enemy enemy) {

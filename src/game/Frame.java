@@ -1,3 +1,5 @@
+package game;
+
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +16,7 @@ public class Frame extends JFrame implements ActionListener {
   final private int HEIGHT = 720;
   final private int WIDTH = 1280;
 
-  JButton newGame = new JButton("New Game");
+  JButton newGame = new JButton("New game");
   JButton exit = new JButton("Exit");
   JButton about = new JButton("About");
   JButton mainMenu = new JButton("Main Menu");
@@ -72,11 +74,11 @@ public class Frame extends JFrame implements ActionListener {
         game = new Game(3);
         game.add(mainMenu);
         addKeyListener(game);
-        panel.add("Game", game);
+        panel.add("game", game);
       } catch (FileNotFoundException e) {
         e.printStackTrace();
       }
-      layout.show(panel, "Game");
+      layout.show(panel, "game");
     } else if (source == mainMenu) {
       layout.show(panel, "Menu");
     }
