@@ -26,7 +26,7 @@ public class Game extends JPanel {
   public static final int WIDTH = 1280;
   private static final String PRESSED = "pressed";
   private static final String RELEASED = "released";
-  static int level = 5;
+  static int level = 1;
   Player player;
   Enemy[] enemyPool;
   ArrayList<Item> itemPool;
