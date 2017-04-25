@@ -1,26 +1,24 @@
 package game;
 
-import java.awt.Graphics;
-import java.awt.Image;
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
 
 /**
- * Created by um on 25/04/17.
+ * Created by Husnulzaki Wibisono Haryadi (13515005) on 4/26/17.
  */
 
 /**
- * NextLvlPanel.
- * Menangani panel "Next Level"
+ * GameWinPanel.
+ * Menangani panel "Game Win"
  */
-public class NextLvlPanel extends JPanel {
+public class GameWinPanel extends JPanel {
   private Image background;
 
   /**
    * Konstruktor.
    */
-  public NextLvlPanel() {
-    background = new ImageIcon("./images/Levelup.jpg").getImage();
+  public GameWinPanel() {
+    background = new ImageIcon("./images/Gamewin.jpg").getImage();
   }
 
   /**

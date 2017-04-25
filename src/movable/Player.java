@@ -16,23 +16,23 @@ public class Player implements Movable {
   private int diameter;
 
   public Player() {
-    this.name = "";
-    this.score = 0;
-    this.life = 0;
+    name = "";
+    score = 0;
+    life = 0;
     this.pos = new Point(0, 0);
     this.speed = 10;
     this.diameter = 5;
   }
 
   public Player(String name, Point pos, int speed, int diameter) {
-    this.name = name;
+    Player.name = name;
     this.pos = pos;
     this.speed = speed/2;
     this.diameter = diameter;
   }
 
   public Player(String name, int x, int y, int speed, int diameter) {
-    this.name = name;
+    Player.name = name;
     this.pos = new Point(x, y);
     this.speed = speed;
     this.diameter = diameter;

@@ -12,6 +12,11 @@ import movable.Player;
 /**
  * Created by Diki Ardian W (13515092) on 4/24/17.
  */
+
+/**
+ * Frame.
+ * Menangani frame yang menampung seluruh tampilan UI
+ */
 public class Frame extends JFrame implements ActionListener {
 
   public static CardLayout layout = new CardLayout();
@@ -23,16 +28,21 @@ public class Frame extends JFrame implements ActionListener {
   JButton aboutButton = new JButton("About");
   JButton mainMenuButton = new JButton("Main Menu");
   JButton nextLevelButton = new JButton("Next Level");
-  JButton okButton = new JButton("OK");
+  JButton okButton1 = new JButton("OK");
+  JButton okButton2 = new JButton("OK");
   MenuPanel menuPanel = new MenuPanel();
   AboutPanel aboutPanel = new AboutPanel();
   NextLvlPanel nextLvlPanel = new NextLvlPanel();
+  GameWinPanel gameWinPanel = new GameWinPanel();
   GameOverPanel gameOverPanel = new GameOverPanel();
-
   JLabel highScoreLabel = new JLabel("High Score", JLabel.RIGHT);
-
   Game game;
 
+  /**
+   * Constructor.
+   * @throws FileNotFoundException Apabila file target yang akan dibaca tidak
+   * ditemukan
+   */
   public Frame() throws FileNotFoundException {
 
     setFocusable(true);
@@ -48,13 +58,20 @@ public class Frame extends JFrame implements ActionListener {
 
   }
 
+  /**
+   * addButtons.
+   * Menangani komponen Button pada UI
+   * @throws FileNotFoundException Apabila file target yang akan dibaca tidak
+   * ditemukan
+   */
   private void addButtons() throws FileNotFoundException {
     newGameButton.addActionListener(this);
     aboutButton.addActionListener(this);
     exitButton.addActionListener(this);
     mainMenuButton.addActionListener(this);
     nextLevelButton.addActionListener(this);
-    okButton.addActionListener(this);
+    okButton1.addActionListener(this);
+    okButton2.addActionListener(this);
 
     menuPanel.add(newGameButton);
     menuPanel.add(aboutButton);
@@ -74,13 +91,21 @@ public class Frame extends JFrame implements ActionListener {
     nextLvlPanel.add(nextLevelButton);
     mainPanel.add("NextLevel", nextLvlPanel);
 
-    gameOverPanel.add(okButton);
+    gameWinPanel.add(okButton2);
+    mainPanel.add("GameWin", gameWinPanel);
+
+    gameOverPanel.add(okButton1);
     mainPanel.add("GameOver", gameOverPanel);
 
     add(mainPanel);
     layout.show(mainPanel, "Menu");
   }
 
+  /**
+   * actionPerformed.
+   * Menangani tanggapan terhadap aksi user pada menu utama
+   * @param actionEvent Aksi user
+   */
   @Override
   public void actionPerformed(ActionEvent actionEvent) {
     Object source = actionEvent.getSource();
@@ -108,9 +133,10 @@ public class Frame extends JFrame implements ActionListener {
         }
         layout.show(mainPanel, "game");
       }
-    } else if (source == mainMenuButton || source == okButton) {
+    } else if (source == mainMenuButton || source == okButton1 || source ==
+      okButton2) {
       if (game != null) {
-        if (source == okButton) {
+        if (source == okButton1 || source == okButton2) {
           try {
             game.submitScore();
           } catch (FileNotFoundException e) {

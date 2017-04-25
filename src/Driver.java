@@ -10,7 +10,15 @@ import sun.audio.ContinuousAudioDataStream;
 /**
  * Created by Diki Ardian W (13515092) on 4/24/17.
  */
+
+/**
+ * Driver.
+ * Implementasi program utama
+ */
 public class Driver {
+  /**
+   * Memutar musik pada program.
+   */
   public static void music() {
 
     AudioStream BGM = null;

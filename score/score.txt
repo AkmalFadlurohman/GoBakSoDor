@@ -5,3 +5,5 @@ jekk:5:
 jekk:2:
 qw:1:
 um:3:
+yoy:4:
+yoto:4:
