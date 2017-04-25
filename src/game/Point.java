@@ -32,4 +32,12 @@ public class Point {
   public void setY(int y) {
     this.y = y;
   }
+
+  public boolean isEqual(Point p) {
+    return x == p.x && y == p.y;
+  }
+
+  public boolean isEqual(int x, int y) {
+    return this.x == x && this.y == y;
+  }
 }
