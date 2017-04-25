@@ -44,7 +44,7 @@ public class Game extends JPanel {
   public Game() throws FileNotFoundException {
 
     try {
-      imageLogo = ImageIO.read(new File("./images/GobakSodor.png"));
+      imageLogo = ImageIO.read(new File("./images/GobakSodor.jpg"));
       imageBall = ImageIO.read(new File("./images/Ball.png"));
     } catch (IOException ex) {
       System.out.println(ex.getMessage());
