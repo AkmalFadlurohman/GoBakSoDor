@@ -1,15 +1,16 @@
 package movable;
 
-import game.*;
+import game.Game;
+import game.Point;
 
 /**
  * Created by Diki Ardian W (13515092) on 4/23/17.
  */
 public class Player implements Movable {
 
-  private String name;
   private static int score = 0;
   private static int life = 3;
+  private String name;
   private int speed;
   private Point pos;
   private int diameter;
@@ -37,14 +38,6 @@ public class Player implements Movable {
     this.diameter = diameter;
   }
 
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
   public static int getScore() {
     return score;
   }
@@ -59,6 +52,18 @@ public class Player implements Movable {
 
   public static void setLife(int life) {
     Player.life = life;
+  }
+
+  public static boolean gameOver() {
+    return (life == 0);
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 
   public Point getPos() {
@@ -80,10 +85,6 @@ public class Player implements Movable {
 
   public void setSpeed(int speed) {
     this.speed = speed;
-  }
-
-  public void setDiameter(int diameter) {
-    this.diameter = diameter;
   }
 
   @Override
@@ -116,29 +117,29 @@ public class Player implements Movable {
     return diameter;
   }
 
+  public void setDiameter(int diameter) {
+    this.diameter = diameter;
+  }
+
   public boolean contain(int x, int y) {
     return pos.getX() <= x && pos.getY() <= y && pos.getX() + diameter >= x &&
-      pos.getY() + diameter >= y;
+            pos.getY() + diameter >= y;
   }
 
   public boolean contain(Point pos) {
     return this.pos.getX() <= pos.getX() && this.pos.getY() <= pos.getY() &&
-      this.pos.getX() + diameter >= pos.getX() && this.pos.getY() + diameter >= pos
-      .getY();
+            this.pos.getX() + diameter >= pos.getX() && this.pos.getY() + diameter >= pos
+            .getY();
   }
 
   public boolean contain(int x, int y, int width, int heigth) {
     return ((pos.getX() + diameter >= x && pos.getX() <= x + width) &&
-      (pos.getY() + diameter >= y && pos.getY() <= y + heigth));
+            (pos.getY() + diameter >= y && pos.getY() <= y + heigth));
   }
 
   public boolean contain(Enemy enemy) {
     return ((pos.getX() + diameter >= enemy.getPos().getX() && pos.getX() <= enemy.getPos().getX() + enemy.getWidth()) &&
-           (pos.getY() + diameter >= enemy.getPos().getY() && pos.getY() <= enemy.getPos().getY() + enemy.getHeight()));
-  }
-
-  public static boolean gameOver() {
-    return (life == 0);
+            (pos.getY() + diameter >= enemy.getPos().getY() && pos.getY() <= enemy.getPos().getY() + enemy.getHeight()));
   }
 
 }

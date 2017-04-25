@@ -5,8 +5,8 @@ package item;
  */
 public abstract class Item {
 
-  private String name, effect;
   int locX, locY;
+  private String name, effect;
 
   public Item(String name, String effect, int x, int y) {
     this.name = name;
@@ -19,16 +19,16 @@ public abstract class Item {
     return effect;
   }
 
+  public void setEffect(String effect) {
+    this.effect = effect;
+  }
+
   public String getName() {
     return name;
   }
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public void setEffect(String effect) {
-    this.effect = effect;
   }
 
   public int getLocX() {

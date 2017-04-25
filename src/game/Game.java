@@ -17,58 +17,19 @@ import tile.Tile;
 @SuppressWarnings("serial")
 public class Game extends JPanel {
 
-  enum Dir {
-
-
-    LEFT("Left", KeyEvent.VK_LEFT, -1, 0),
-    RIGHT("Right", KeyEvent.VK_RIGHT, 1, 0),
-    UP("Up", KeyEvent.VK_UP, 0, -1),
-    DOWN("Down", KeyEvent.VK_DOWN, 0, 1);
-
-    private String name;
-    private int keyCode;
-    private int deltaX;
-    private int deltaY;
-
-    private Dir(String name, int keyCode, int deltaX, int deltaY) {
-      this.name = name;
-      this.keyCode = keyCode;
-      this.deltaX = deltaX;
-      this.deltaY = deltaY;
-    }
-
-    public String getName() {
-      return name;
-    }
-
-    public int getKeyCode() {
-      return keyCode;
-    }
-
-    public int getDeltaX() {
-      return deltaX;
-    }
-
-    public int getDeltaY() {
-      return deltaY;
-    }
-  }
-
-  private Map<Dir, Boolean> dirMap = new EnumMap<>(Dir.class);
   public static final int HEIGHT = 600;
   public static final int WIDTH = 1280;
   private static final String PRESSED = "pressed";
   private static final String RELEASED = "released";
+  static int level = 1;
   Player player;
   Enemy[] enemyPool;
   int playerPosX;
   int playerPosY;
-  private Timer animationTimer = new Timer(10, new AnimationListener());
-  static int level = 1;
-
   Tile start = new Tile();
   Tile finish = new Tile();
-
+  private Map<Dir, Boolean> dirMap = new EnumMap<>(Dir.class);
+  private Timer animationTimer = new Timer(10, new AnimationListener());
   private BufferedImage image;
 
   public Game() throws FileNotFoundException {
@@ -147,6 +108,14 @@ public class Game extends JPanel {
 //    timer = new Timer(10, this);
   }
 
+  public static int getLevel() {
+    return level;
+  }
+
+  public static void setLevel(int level) {
+    Game.level = level;
+  }
+
   @Override
   public void paint(Graphics g) {
     super.paint(g);
@@ -170,6 +139,65 @@ public class Game extends JPanel {
     g2d.drawString("Score: " + player.getScore(), 530, HEIGHT + 90);
     g2d.drawString("Life: " + player.getLife(), 900, HEIGHT + 50);
     g2d.drawString("Level: " + level, 900, HEIGHT + 90);
+  }
+
+  private void setKeyBindings() {
+    int condition = WHEN_IN_FOCUSED_WINDOW;
+    InputMap inputMap = getInputMap(condition);
+    ActionMap actionMap = getActionMap();
+
+    for (Dir dir : Dir.values()) {
+      KeyStroke keyPressed = KeyStroke.getKeyStroke(dir.getKeyCode(), 0, false);
+      KeyStroke keyReleased = KeyStroke.getKeyStroke(dir.getKeyCode(), 0, true);
+
+      inputMap.put(keyPressed, dir.toString() + PRESSED);
+      inputMap.put(keyReleased, dir.toString() + RELEASED);
+
+      actionMap.put(dir.toString() + PRESSED, new DirAction(dir, PRESSED));
+      actionMap.put(dir.toString() + RELEASED, new DirAction(dir, RELEASED));
+    }
+
+  }
+
+  public void stopTimer() {
+    animationTimer.stop();
+  }
+
+  enum Dir {
+
+
+    LEFT("Left", KeyEvent.VK_LEFT, -1, 0),
+    RIGHT("Right", KeyEvent.VK_RIGHT, 1, 0),
+    UP("Up", KeyEvent.VK_UP, 0, -1),
+    DOWN("Down", KeyEvent.VK_DOWN, 0, 1);
+
+    private String name;
+    private int keyCode;
+    private int deltaX;
+    private int deltaY;
+
+    private Dir(String name, int keyCode, int deltaX, int deltaY) {
+      this.name = name;
+      this.keyCode = keyCode;
+      this.deltaX = deltaX;
+      this.deltaY = deltaY;
+    }
+
+    public String getName() {
+      return name;
+    }
+
+    public int getKeyCode() {
+      return keyCode;
+    }
+
+    public int getDeltaX() {
+      return deltaX;
+    }
+
+    public int getDeltaY() {
+      return deltaY;
+    }
   }
 
   private class AnimationListener implements ActionListener {
@@ -234,24 +262,6 @@ public class Game extends JPanel {
     }
   }
 
-  private void setKeyBindings() {
-    int condition = WHEN_IN_FOCUSED_WINDOW;
-    InputMap inputMap = getInputMap(condition);
-    ActionMap actionMap = getActionMap();
-
-    for (Dir dir : Dir.values()) {
-      KeyStroke keyPressed = KeyStroke.getKeyStroke(dir.getKeyCode(), 0, false);
-      KeyStroke keyReleased = KeyStroke.getKeyStroke(dir.getKeyCode(), 0, true);
-
-      inputMap.put(keyPressed, dir.toString() + PRESSED);
-      inputMap.put(keyReleased, dir.toString() + RELEASED);
-
-      actionMap.put(dir.toString() + PRESSED, new DirAction(dir, PRESSED));
-      actionMap.put(dir.toString() + RELEASED, new DirAction(dir, RELEASED));
-    }
-
-  }
-
   private class DirAction extends AbstractAction {
 
     private String pressedOrReleased;
@@ -270,17 +280,5 @@ public class Game extends JPanel {
         dirMap.put(dir, Boolean.FALSE);
       }
     }
-  }
-
-  public static int getLevel() {
-    return level;
-  }
-
-  public static void setLevel(int level) {
-    Game.level = level;
-  }
-
-  public void stopTimer() {
-    animationTimer.stop();
   }
 }

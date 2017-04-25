@@ -14,19 +14,16 @@ import movable.Player;
  */
 public class Frame extends JFrame implements ActionListener {
 
+  public static CardLayout layout = new CardLayout();
+  public static JPanel mainPanel = new JPanel();
   final private int HEIGHT = 720;
   final private int WIDTH = 1280;
-
   JButton newGameButton = new JButton("New game");
   JButton exitButton = new JButton("Exit");
   JButton aboutButton = new JButton("About");
   JButton mainMenuButton = new JButton("Main Menu");
   JButton nextLevelButton = new JButton("Next Level");
   JButton okButton = new JButton("OK");
-
-  public static CardLayout layout = new CardLayout();
-
-  public static JPanel mainPanel = new JPanel();
   MenuPanel menuPanel = new MenuPanel();
   AboutPanel aboutPanel = new AboutPanel();
   NextLvlPanel nextLvlPanel = new NextLvlPanel();
