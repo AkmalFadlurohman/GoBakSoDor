@@ -2,7 +2,6 @@ import game.Frame;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import sun.audio.AudioData;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
@@ -14,30 +13,21 @@ import sun.audio.ContinuousAudioDataStream;
 public class Driver {
   public static void music() {
 
-    AudioPlayer MGP = AudioPlayer.player;
-    AudioStream BGM;
+    AudioStream BGM = null;
     AudioData MD;
-
+    AudioPlayer MP = AudioPlayer.player;
     ContinuousAudioDataStream loop = null;
 
-    try
-    {
-      InputStream test = new FileInputStream("./music/music.wav");
-      BGM = new AudioStream(test);
-      AudioPlayer.player.start(BGM);
+    try {
+      BGM = new AudioStream(new FileInputStream("./music/music.wav"));
       MD = BGM.getData();
       loop = new ContinuousAudioDataStream(MD);
-
+      MP.start(loop);
+    } catch (IOException error) {
+      MP.start(BGM);
     }
-    catch(FileNotFoundException e){
-      System.out.print(e.toString());
-    }
-    catch(IOException error)
-    {
-      System.out.print(error.toString());
-    }
-    MGP.start(loop);
   }
+
   public static void main(String[] args) throws FileNotFoundException {
     music();
     new Frame();

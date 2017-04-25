@@ -1,12 +1,12 @@
 package game;
 
 import java.awt.CardLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import java.io.IOException;
+import javax.swing.*;
 import movable.Player;
 
 /**
@@ -29,6 +29,8 @@ public class Frame extends JFrame implements ActionListener {
   NextLvlPanel nextLvlPanel = new NextLvlPanel();
   GameOverPanel gameOverPanel = new GameOverPanel();
 
+  JLabel highScoreLabel = new JLabel("High Score", JLabel.RIGHT);
+
   Game game;
 
   public Frame() throws FileNotFoundException {
@@ -43,9 +45,10 @@ public class Frame extends JFrame implements ActionListener {
     setResizable(false);
     setLocationRelativeTo(null);
     setVisible(true);
+
   }
 
-  private void addButtons() {
+  private void addButtons() throws FileNotFoundException {
     newGameButton.addActionListener(this);
     aboutButton.addActionListener(this);
     exitButton.addActionListener(this);
@@ -56,6 +59,14 @@ public class Frame extends JFrame implements ActionListener {
     menuPanel.add(newGameButton);
     menuPanel.add(aboutButton);
     menuPanel.add(exitButton);
+
+    String hs = Game.getHighScore();
+    String[] parts = hs.split("\\:");
+    String name = parts[0];
+    String score = parts[1];
+    highScoreLabel.setText("High Score: " + name + " (" + score + ")" );
+    highScoreLabel.setFont(new Font("Ubuntu", Font.BOLD, 18));
+    menuPanel.add(highScoreLabel);
 
     mainPanel.add("Menu", menuPanel);
     mainPanel.add("About", aboutPanel);
@@ -80,17 +91,34 @@ public class Frame extends JFrame implements ActionListener {
       aboutPanel.add(mainMenuButton);
       layout.show(mainPanel, "About");
     } else if (source == newGameButton || source == nextLevelButton) {
-      try {
-        game = new Game();
-        game.add(mainMenuButton);
-//        addKeyListener(game);
-        mainPanel.add("game", game);
-      } catch (FileNotFoundException e) {
-        e.printStackTrace();
+      String name = "";
+      if (source == newGameButton) {
+        name = JOptionPane.showInputDialog(this, "Input Username:");
+        Player.setName(name);
       }
-      layout.show(mainPanel, "game");
+      if (Player.getName() == null) {
+        layout.show(mainPanel, "Menu");
+      } else {
+        try {
+          game = new Game();
+          game.add(mainMenuButton);
+          mainPanel.add("game", game);
+        } catch (FileNotFoundException e) {
+          e.printStackTrace();
+        }
+        layout.show(mainPanel, "game");
+      }
     } else if (source == mainMenuButton || source == okButton) {
       if (game != null) {
+        if (source == okButton) {
+          try {
+            game.submitScore();
+          } catch (FileNotFoundException e) {
+            e.printStackTrace();
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        }
         game.stopTimer();
         Game.setLevel(1);
         Player.setScore(0);
@@ -99,4 +127,6 @@ public class Frame extends JFrame implements ActionListener {
       layout.show(mainPanel, "Menu");
     }
   }
+
+
 }
