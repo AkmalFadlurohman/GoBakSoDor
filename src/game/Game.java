@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import movable.Enemy;
 import movable.Player;
+import tile.Tile;
 
 @SuppressWarnings("serial")
 public class Game extends JPanel implements ActionListener, KeyListener {
@@ -26,15 +27,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
   int playerPosY;
   static int level = 1;
 
-  int startPosX;
+  Tile start = new Tile();
+  Tile finish = new Tile();
 
-  int startPosY;
-  int startHeight;
-  int startWidth;
-  int finishPosX;
-  int finishPosY;
-  int finishHeight;
-  int finishWidth;
   private BufferedImage image;
   static Timer timer;
 
@@ -48,25 +43,26 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
     String namaFile = "./level/" + Integer.toString(Game.level) + ".txt";
     try {
+
       FileInputStream fstream = new FileInputStream(namaFile);
       BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
       String strLine;
       strLine = br.readLine();
-      startPosX = Integer.parseInt(strLine.substring(10));
+      start.setPosX(Integer.parseInt(strLine.substring(10)));
       strLine = br.readLine();
-      startPosY = Integer.parseInt(strLine.substring(10));
+      start.setPosY(Integer.parseInt(strLine.substring(10)));
       strLine = br.readLine();
-      startHeight = Integer.parseInt(strLine.substring(12));
+      start.setHeight(Integer.parseInt(strLine.substring(12)));
       strLine = br.readLine();
-      startWidth = Integer.parseInt(strLine.substring(11));
+      start.setWidth(Integer.parseInt(strLine.substring(11)));
       strLine = br.readLine();
-      finishPosX = Integer.parseInt(strLine.substring(11));
+      finish.setPosX(Integer.parseInt(strLine.substring(11)));
       strLine = br.readLine();
-      finishPosY = Integer.parseInt(strLine.substring(11));
+      finish.setPosY(Integer.parseInt(strLine.substring(11)));
       strLine = br.readLine();
-      finishHeight = Integer.parseInt(strLine.substring(13));
+      finish.setHeight(Integer.parseInt(strLine.substring(13)));
       strLine = br.readLine();
-      finishWidth = Integer.parseInt(strLine.substring(12));
+      finish.setWidth(Integer.parseInt(strLine.substring(12)));
       strLine = br.readLine();
       int speedPlayer = Integer.parseInt(strLine.substring(12));
       strLine = br.readLine();
@@ -116,9 +112,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     Graphics2D g2d = (Graphics2D) g;
     g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     g2d.setColor(new Color(52, 152, 219));
-    g2d.fillRect(startPosX, startPosY, startWidth, startHeight);
+    g2d.fillRect(start.getPosX(), start.getPosY(), start.getWidth(), start.getHeight());
     g2d.setColor(new Color(231, 76, 60));
-    g2d.fillRect(finishPosX, finishPosY, finishWidth, finishHeight);
+    g2d.fillRect(finish.getPosX(), finish.getPosY(), finish.getWidth(), finish.getHeight());
     g2d.setColor(new Color(0xFF23D3));
     g2d.fillOval(player.getPos().getX(), player.getPos().getY(), player.getDiameter(), player.getDiameter());
     g2d.setColor(new Color(0x000000));
@@ -145,7 +141,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
       }
     }
 
-    if (player.contain(finishPosX, finishPosY, finishWidth, finishHeight)) {
+    if (player.contain(finish.getPosX(), finish.getPosY(), finish.getWidth(), finish.getHeight())) {
       Player.setScore(Player.getScore() + 1);
       level++;
       timer.stop();

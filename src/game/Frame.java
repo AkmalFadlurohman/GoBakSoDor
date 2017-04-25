@@ -24,9 +24,9 @@ public class Frame extends JFrame implements ActionListener {
   JButton nextLevelButton = new JButton("Next Level");
   JButton okButton = new JButton("OK");
 
-  static CardLayout layout = new CardLayout();
+  public static CardLayout layout = new CardLayout();
 
-  static JPanel mainPanel = new JPanel();
+  public static JPanel mainPanel = new JPanel();
   MenuPanel menuPanel = new MenuPanel();
   AboutPanel aboutPanel = new AboutPanel();
   NextLvlPanel nextLvlPanel = new NextLvlPanel();
