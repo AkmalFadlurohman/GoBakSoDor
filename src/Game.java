@@ -139,6 +139,10 @@ public class Game extends JPanel implements ActionListener, KeyListener {
         player.setPos(playerPosX, playerPosY);
       }
     }
+
+//    if (player.contain(finishPosX, finishPosY, finishWidth, finishHeight)) {
+//      Player.setScore(Player.getScore() + );
+//    }
   }
 
   @Override
