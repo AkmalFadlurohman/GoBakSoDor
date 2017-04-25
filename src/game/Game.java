@@ -10,17 +10,51 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.EnumMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import javax.imageio.ImageIO;
-import javax.swing.JPanel;
-import javax.swing.Timer;
+import javax.swing.*;
 
 @SuppressWarnings("serial")
-public class Game extends JPanel implements ActionListener, KeyListener {
+public class Game extends JPanel{
 
+  enum Dir {
+    LEFT("Left", KeyEvent.VK_LEFT, -1, 0),
+    RIGHT("Right", KeyEvent.VK_RIGHT, 1, 0),
+    UP("Up", KeyEvent.VK_UP, 0, -1),
+    DOWN("Down", KeyEvent.VK_DOWN, 0, 1);
+
+    private String name;
+    private int keyCode;
+    private int deltaX;
+    private int deltaY;
+    private Dir(String name, int keyCode, int deltaX, int deltaY) {
+      this.name = name;
+      this.keyCode = keyCode;
+      this.deltaX = deltaX;
+      this.deltaY = deltaY;
+    }
+    public String getName() {
+      return name;
+    }
+    public int getKeyCode() {
+      return keyCode;
+    }
+    public int getDeltaX() {
+      return deltaX;
+    }
+    public int getDeltaY() {
+      return deltaY;
+    }
+  }
+
+  private Map<Dir, Boolean> dirMap = new EnumMap<>(Dir.class);
   public static final int HEIGHT = 600;
   public static final int WIDTH = 1280;
+  private static final String PRESSED = "pressed";
+  private static final String RELEASED = "released";
   Player player;
   Enemy[] enemyPool;
   int playerPosX;
@@ -35,6 +69,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
   int finishHeight;
   int finishWidth;
   private BufferedImage image;
+  private Timer animationTimer = new Timer(10, new AnimationListener());
 
   public Game(int level) throws FileNotFoundException {
 
@@ -105,9 +140,15 @@ public class Game extends JPanel implements ActionListener, KeyListener {
       System.out.println(ioe.getMessage());
     }
 
-    Timer timer = new Timer(10, this);
+    for (Dir dir : Dir.values()) {
+      dirMap.put(dir, Boolean.FALSE);
+    }
+    setKeyBindings();
+    animationTimer.start();
 
-    timer.start();
+//    Timer timer = new Timer(10, this);
+
+//    timer.start();
   }
 
   @Override
@@ -135,68 +176,133 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     g2d.drawString("Level: " + level , 900, HEIGHT + 90);
   }
 
-  @Override
-  public void actionPerformed(ActionEvent actionEvent) {
-    repaint();
-    for (Enemy anEnemyPool : enemyPool) {
-      if (player.contain(anEnemyPool)) {
-        player.setLife(player.getLife() - 1);
-        player.setPos(playerPosX, playerPosY);
+  private class AnimationListener implements ActionListener {
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+
+      int moveCode = 0;
+      for (Dir dir : Dir.values()) {
+        if (dirMap.get(dir)) {
+          switch (dir.getName()) {
+            case "Left" :
+              moveCode = 1;
+              break;
+            case "Down" :
+              moveCode = 2;
+              break;
+            case "Right" :
+              moveCode = 3;
+              break;
+            case "Up" :
+              moveCode = 4;
+              break;
+          }
+        }
       }
-    }
+
+      player.move(moveCode);
+
+      repaint();
+
+      for (Enemy anEnemyPool : enemyPool) {
+        if (player.contain(anEnemyPool)) {
+          player.setLife(player.getLife() - 1);
+          player.setPos(playerPosX, playerPosY);
+        }
+      }
 
 //    if (player.contain(finishPosX, finishPosY, finishWidth, finishHeight)) {
 //      movable.Player.setScore(movable.Player.getScore() + );
 //    }
+    }
   }
 
-  @Override
-  public void keyTyped(KeyEvent keyEvent) {
+  private void setKeyBindings() {
+    int condition = WHEN_IN_FOCUSED_WINDOW;
+    InputMap inputMap = getInputMap(condition);
+    ActionMap actionMap = getActionMap();
+
+    for (Dir dir : Dir.values()) {
+      KeyStroke keyPressed = KeyStroke.getKeyStroke(dir.getKeyCode(), 0, false);
+      KeyStroke keyReleased = KeyStroke.getKeyStroke(dir.getKeyCode(), 0, true);
+
+      inputMap.put(keyPressed, dir.toString() + PRESSED);
+      inputMap.put(keyReleased, dir.toString() + RELEASED);
+
+      actionMap.put(dir.toString() + PRESSED, new DirAction(dir, PRESSED));
+      actionMap.put(dir.toString() + RELEASED, new DirAction(dir, RELEASED));
+    }
 
   }
+
+  private class DirAction extends AbstractAction {
+
+    private String pressedOrReleased;
+    private Dir dir;
+
+    public DirAction(Dir dir, String pressedOrReleased) {
+      this.dir = dir;
+      this.pressedOrReleased = pressedOrReleased;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+      if (pressedOrReleased.equals(PRESSED)) {
+        dirMap.put(dir, Boolean.TRUE);
+      } else if (pressedOrReleased.equals(RELEASED)) {
+        dirMap.put(dir, Boolean.FALSE);
+      }
+    }
+
+  }
+
+//  @Override
+//  public void keyTyped(KeyEvent keyEvent) {
+//
+//  }
 
   Set<Integer> pressed = new TreeSet<>();
 
-  @Override
-  public void keyPressed(KeyEvent keyEvent) {
-    int code = keyEvent.getKeyCode();
-    pressed.add(code);
-
-    if (pressed.size() > 1) {
-      Integer[] array = pressed.toArray(new Integer[]{});
-      if ((array[0] == KeyEvent.VK_LEFT) && (array[1] == KeyEvent.VK_DOWN)) {
-        player.move(1);
-        player.move(2);
-      } else if (array[0] == KeyEvent.VK_LEFT && array[1] == KeyEvent.VK_UP) {
-        player.move(4);
-        player.move(1);
-      } else if (array[0] == KeyEvent.VK_UP && array[1] == KeyEvent.VK_RIGHT) {
-        player.move(3);
-        player.move(4);
-      } else if (array[0] == KeyEvent.VK_RIGHT && array[1] == KeyEvent.VK_DOWN) {
-        player.move(2);
-        player.move(3);
-      }
-    } else {
-      if (code == KeyEvent.VK_LEFT) {
-        player.move(1);
-      } else if (code == KeyEvent.VK_DOWN) {
-        player.move(2);
-      } else if (code == KeyEvent.VK_RIGHT) {
-        player.move(3);
-      } else if (code == KeyEvent.VK_UP) {
-        player.move(4);
-      }
-    }
-    if (code == KeyEvent.VK_ESCAPE) {
-      System.exit(2);
-    }
-  }
-
-  @Override
-  public void keyReleased(KeyEvent keyEvent) {
-    pressed.remove(keyEvent.getKeyCode());
-  }
+//  @Override
+//  public void keyPressed(KeyEvent keyEvent) {
+//    int code = keyEvent.getKeyCode();
+//    pressed.add(code);
+//
+//    if (pressed.size() > 1) {
+//      Integer[] array = pressed.toArray(new Integer[]{});
+//      if ((array[0] == KeyEvent.VK_LEFT) && (array[1] == KeyEvent.VK_DOWN)) {
+//        player.move(1);
+//        player.move(2);
+//      } else if (array[0] == KeyEvent.VK_LEFT && array[1] == KeyEvent.VK_UP) {
+//        player.move(4);
+//        player.move(1);
+//      } else if (array[0] == KeyEvent.VK_UP && array[1] == KeyEvent.VK_RIGHT) {
+//        player.move(3);
+//        player.move(4);
+//      } else if (array[0] == KeyEvent.VK_RIGHT && array[1] == KeyEvent.VK_DOWN) {
+//        player.move(2);
+//        player.move(3);
+//      }
+//    } else {
+//      if (code == KeyEvent.VK_LEFT) {
+//        player.move(1);
+//      } else if (code == KeyEvent.VK_DOWN) {
+//        player.move(2);
+//      } else if (code == KeyEvent.VK_RIGHT) {
+//        player.move(3);
+//      } else if (code == KeyEvent.VK_UP) {
+//        player.move(4);
+//      }
+//    }
+//    if (code == KeyEvent.VK_ESCAPE) {
+//      System.exit(2);
+//    }
+//  }
+//
+//  @Override
+//  public void keyReleased(KeyEvent keyEvent) {
+//    pressed.remove(keyEvent.getKeyCode());
+//  }
 
 
 }
