@@ -1,8 +1,5 @@
 package game;
 
-import movable.Enemy;
-import movable.Player;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +12,8 @@ import java.util.TreeSet;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import movable.Enemy;
+import movable.Player;
 
 @SuppressWarnings("serial")
 public class Game extends JPanel implements ActionListener, KeyListener {
@@ -25,8 +24,10 @@ public class Game extends JPanel implements ActionListener, KeyListener {
   Enemy[] enemyPool;
   int playerPosX;
   int playerPosY;
-  int level;
+  static int level = 1;
+
   int startPosX;
+
   int startPosY;
   int startHeight;
   int startWidth;
@@ -35,10 +36,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
   int finishHeight;
   int finishWidth;
   private BufferedImage image;
+  static Timer timer;
 
-  public Game(int level) throws FileNotFoundException {
-
-    this.level = level;
+  public Game() throws FileNotFoundException {
 
     try {
       image = ImageIO.read(new File("./images/GobakSodor.png"));
@@ -46,7 +46,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
       System.out.println(ex.getMessage());
     }
 
-    String namaFile = "./level/" + Integer.toString(level) + ".txt";
+    String namaFile = "./level/" + Integer.toString(Game.level) + ".txt";
     try {
       FileInputStream fstream = new FileInputStream(namaFile);
       BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
@@ -105,7 +105,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
       System.out.println(ioe.getMessage());
     }
 
-    Timer timer = new Timer(10, this);
+    timer = new Timer(10, this);
 
     timer.start();
   }
@@ -145,9 +145,18 @@ public class Game extends JPanel implements ActionListener, KeyListener {
       }
     }
 
-//    if (player.contain(finishPosX, finishPosY, finishWidth, finishHeight)) {
-//      movable.Player.setScore(movable.Player.getScore() + );
-//    }
+    if (player.contain(finishPosX, finishPosY, finishWidth, finishHeight)) {
+      Player.setScore(Player.getScore() + 1);
+      level++;
+      timer.stop();
+      Frame.layout.show(Frame.mainPanel, "NextLevel");
+    }
+
+    if (player.gameOver()) {
+      //TODO: MASUKIN KE HIGHSCORE
+      Frame.layout.show(Frame.mainPanel, "GameOver");
+    }
+
   }
 
   @Override
@@ -193,10 +202,21 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     }
   }
 
+  public static int getLevel() {
+    return level;
+  }
+
+  public static void setLevel(int level) {
+    Game.level = level;
+  }
+
+  public static void stopTimer() {
+    timer.stop();
+  }
+
   @Override
   public void keyReleased(KeyEvent keyEvent) {
     pressed.remove(keyEvent.getKeyCode());
   }
-
 
 }
