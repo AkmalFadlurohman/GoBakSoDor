@@ -86,7 +86,7 @@ public class Frame extends JFrame implements ActionListener {
       try {
         game = new Game();
         game.add(mainMenuButton);
-        addKeyListener(game);
+//        addKeyListener(game);
         mainPanel.add("game", game);
       } catch (FileNotFoundException e) {
         e.printStackTrace();
