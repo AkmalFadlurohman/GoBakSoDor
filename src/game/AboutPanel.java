@@ -12,7 +12,7 @@ public class AboutPanel extends JPanel {
   private Image background;
 
   public AboutPanel() {
-    background = new ImageIcon("./images/About.jpg").getImage();
+    background = new ImageIcon("./images/About2.jpg").getImage();
   }
 
   @Override
