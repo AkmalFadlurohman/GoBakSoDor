@@ -27,3 +27,16 @@ enemyPosY=250
 enemySpeed=4
 enemyDelay=4
 enemyDirection=0
+itemCount=3
+#1
+Bonus
+itemPosX=400
+itemPosY=300
+#2
+Heart
+itemPosX=750
+itemPosY=100
+#3
+Special
+itemPosX=900
+itemPosY=200

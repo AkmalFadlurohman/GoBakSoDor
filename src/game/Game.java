@@ -26,7 +26,7 @@ public class Game extends JPanel {
   public static final int WIDTH = 1280;
   private static final String PRESSED = "pressed";
   private static final String RELEASED = "released";
-  static int level = 1;
+  static int level = 5;
   Player player;
   Enemy[] enemyPool;
   ArrayList<Item> itemPool;
@@ -100,16 +100,29 @@ public class Game extends JPanel {
         enemyPool[i] = new Enemy(enemyWidth, enemyHeight, enemySpeed, enemyPosX, enemyPosY, dir, delay);
         new Thread(enemyPool[i]).start();
       }
-
       player = new Player(Player.getName(), new Point(playerPosX, playerPosY), speedPlayer, diameter);
-
+      itemPool = new ArrayList<Item>();
+      strLine = br.readLine();
+      int itemCount = Integer.parseInt(strLine.substring(10));
+      for (int i = 0; i < itemCount; i++) {
+        strLine = br.readLine();
+        strLine = br.readLine();
+        String itemName = strLine;
+        strLine = br.readLine();
+        int posX = Integer.parseInt(strLine.substring(9));
+        strLine = br.readLine();
+        int posY = Integer.parseInt(strLine.substring(9));
+        if (itemName.equals("Bonus")) {
+          itemPool.add(new BonusScore(posX, posY));
+        } else if (itemName.equals("Heart")) {
+          itemPool.add(new Heart(posX, posY));
+        } else if (itemName.equals("Special")) {
+          itemPool.add(new Special(posX, posY));
+        }
+      }
     } catch (IOException ioe) {
       System.out.println(ioe.getMessage());
     }
-    itemPool = new ArrayList<Item>();
-    itemPool.add(new Heart(200,200));
-    itemPool.add(new Special(200,300));
-    itemPool.add(new BonusScore(200,400));
     for (Dir dir : Dir.values()) {
       dirMap.put(dir, Boolean.FALSE);
     }
@@ -279,15 +292,6 @@ public class Game extends JPanel {
         if (player.contain(itemPool.get(i))) {
           itemPool.get(i).applyEffect(player);
           itemPool.get(i).applyEffect(enemyPool);
-        /*if (itemPool.get(i).getClass().getSimpleName() == "Heart") {
-          itemPool.get(i).applyEffect(player);
-        }
-        else if (itemPool.get(i).getClass().getSimpleName() == "BonusScore") {
-          itemPool.get(i).applyEffect(player);
-        }
-        else if (itemPool.get(i).getClass().getSimpleName() == "Special") {
-          itemPool.get(i).applyEffect(enemyPool);
-        }*/
           itemPool.remove(i);
         }
       }
