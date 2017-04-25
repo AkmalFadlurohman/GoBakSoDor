@@ -1,11 +1,20 @@
 package game;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.EnumMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
@@ -30,12 +39,13 @@ public class Game extends JPanel {
   Tile finish = new Tile();
   private Map<Dir, Boolean> dirMap = new EnumMap<>(Dir.class);
   private Timer animationTimer = new Timer(10, new AnimationListener());
-  private BufferedImage image;
+  private BufferedImage imageLogo, imageBall;
 
   public Game() throws FileNotFoundException {
 
     try {
-      image = ImageIO.read(new File("./images/GobakSodor.png"));
+      imageLogo = ImageIO.read(new File("./images/GobakSodor.png"));
+      imageBall = ImageIO.read(new File("./images/Ball.png"));
     } catch (IOException ex) {
       System.out.println(ex.getMessage());
     }
@@ -105,7 +115,6 @@ public class Game extends JPanel {
     }
     setKeyBindings();
     animationTimer.start();
-//    timer = new Timer(10, this);
   }
 
   public static int getLevel() {
@@ -127,13 +136,14 @@ public class Game extends JPanel {
     g2d.fillRect(finish.getPosX(), finish.getPosY(), finish.getWidth(), finish.getHeight());
     g2d.setColor(new Color(0xFF23D3));
     g2d.fillOval(player.getPos().getX(), player.getPos().getY(), player.getDiameter(), player.getDiameter());
+    g2d.drawImage(imageBall, player.getPos().getX(), player.getPos().getY(), player.getDiameter(), player.getDiameter(), this);
     g2d.setColor(new Color(0x000000));
     g2d.drawRect(0, 0, WIDTH, HEIGHT);
     g2d.drawLine(519, HEIGHT, 519, HEIGHT + 120);
     for (Enemy anEnemyPool : enemyPool) {
       g2d.fillRect(anEnemyPool.getPos().getX(), anEnemyPool.getPos().getY(), anEnemyPool.getWidth(), anEnemyPool.getHeight());
     }
-    g2d.drawImage(image, 0, 607, this);
+    g2d.drawImage(imageLogo, 0, 607, this);
     g2d.setFont(new Font("Ubuntu", Font.PLAIN, 40));
     g2d.drawString("Name: " + player.getName(), 530, HEIGHT + 50);
     g2d.drawString("Score: " + player.getScore(), 530, HEIGHT + 90);
@@ -219,20 +229,6 @@ public class Game extends JPanel {
           if (dir.getName() == "Up") {
             player.move(4);
           }
-//          switch (dir.getName()) {
-//            case "Left":
-//              moveCode = 1;
-//              break;
-//            case "Down":
-//              moveCode = 2;
-//              break;
-//            case "Right":
-//              moveCode = 3;
-//              break;
-//            case "Up":
-//              moveCode = 4;
-//              break;
-//          }
         }
       }
 
@@ -248,7 +244,6 @@ public class Game extends JPanel {
       }
 
       if (player.contain(finish.getPosX(), finish.getPosY(), finish.getWidth(), finish.getHeight())) {
-
         Player.setScore(Player.getScore() + 1);
         level++;
         animationTimer.stop();
@@ -257,6 +252,7 @@ public class Game extends JPanel {
 
       if (player.gameOver()) {
         //TODO: MASUKIN KE HIGHSCORE
+        animationTimer.stop();
         Frame.layout.show(Frame.mainPanel, "GameOver");
       }
     }
