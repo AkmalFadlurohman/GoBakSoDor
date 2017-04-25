@@ -1,0 +1,7 @@
+jekk:1:
+rozi:3:
+um:2:
+jekk:5:
+jekk:2:
+qw:1:
+um:3:
