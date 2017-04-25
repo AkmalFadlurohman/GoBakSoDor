@@ -10,7 +10,7 @@ public class Player implements Movable {
 
   private static int score = 0;
   private static int life = 3;
-  private String name;
+  private static String name;
   private int speed;
   private Point pos;
   private int diameter;
@@ -58,12 +58,12 @@ public class Player implements Movable {
     return (life == 0);
   }
 
-  public String getName() {
+  public static String getName() {
     return name;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public static void setName(String _name) {
+    name = _name;
   }
 
   public Point getPos() {

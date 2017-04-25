@@ -1,22 +1,15 @@
 package game;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import movable.Enemy;
@@ -104,7 +97,7 @@ public class Game extends JPanel {
         new Thread(enemyPool[i]).start();
       }
 
-      player = new Player("jekk", new Point(playerPosX, playerPosY), speedPlayer, diameter);
+      player = new Player(Player.getName(), new Point(playerPosX, playerPosY), speedPlayer, diameter);
 
     } catch (IOException ioe) {
       System.out.println(ioe.getMessage());
@@ -171,6 +164,29 @@ public class Game extends JPanel {
 
   public void stopTimer() {
     animationTimer.stop();
+  }
+
+  public void submitScore() throws IOException {
+    Writer output = new BufferedWriter(new FileWriter("./score/score.txt", true));
+    output.append("\n" + Player.getName() + ":" + Player.getScore() + ":");
+    output.close();
+  }
+
+  public static String getHighScore() throws FileNotFoundException {
+    int max = -1;
+    String maxname = "";
+    Scanner scan = new Scanner(new File("./score/score.txt"));
+    scan.useDelimiter(Pattern.compile(":"));
+    while (scan.hasNext()) {
+      String name = scan.next();
+      int score = Integer.parseInt(scan.next());
+      if (max < score) {
+        max = score;
+        maxname = name;
+      }
+    }
+    scan.close();
+    return (maxname + ":" + max + ":");
   }
 
   enum Dir {
@@ -251,7 +267,6 @@ public class Game extends JPanel {
       }
 
       if (player.gameOver()) {
-        //TODO: MASUKIN KE HIGHSCORE
         animationTimer.stop();
         Frame.layout.show(Frame.mainPanel, "GameOver");
       }
@@ -275,6 +290,10 @@ public class Game extends JPanel {
       } else if (pressedOrReleased.equals(RELEASED)) {
         dirMap.put(dir, Boolean.FALSE);
       }
+    }
+
+    public void submitScore() {
+
     }
   }
 }
