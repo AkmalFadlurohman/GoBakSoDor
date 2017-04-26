@@ -9,15 +9,15 @@ package game;
  * Kelas tipe data abstrak Point
  */
 public class Point {
-  private int x;
-  private int y;
+  private int posX;
+  private int posY;
 
   /**
    * Konstruktor.
    */
   public Point() {
-    x = 0;
-    y = 0;
+    posX = 0;
+    posY = 0;
   }
 
   /**
@@ -26,40 +26,40 @@ public class Point {
    * @param y Ordinat
    */
   public Point(int x, int y) {
-    this.x = x;
-    this.y = y;
+    this.posX = x;
+    this.posY = y;
   }
 
   /**
    * Getter absis.
    * @return Absis
    */
-  public int getX() {
-    return x;
+  public int getPosX() {
+    return posX;
   }
 
   /**
    * Setter absis.
-   * @param x Absis
+   * @param posX Absis
    */
-  public void setX(int x) {
-    this.x = x;
+  public void setPosX(int posX) {
+    this.posX = posX;
   }
 
   /**
    * Getter ordinat.
    * @return Ordinat
    */
-  public int getY() {
-    return y;
+  public int getPosY() {
+    return posY;
   }
 
   /**
    * Setter ordinat.
-   * @param y Ordinat
+   * @param posY Ordinat
    */
-  public void setY(int y) {
-    this.y = y;
+  public void setPosY(int posY) {
+    this.posY = posY;
   }
 
   /**
@@ -68,16 +68,16 @@ public class Point {
    * @return True apabila objek dan p berada pada titik yang sama
    */
   public boolean isEqual(Point p) {
-    return x == p.x && y == p.y;
+    return posX == p.posX && posY == p.posY;
   }
 
   /**
-   * Memeriksa apakah objek berada pada titik yang sama dengan (x, y).
+   * Memeriksa apakah objek berada pada titik yang sama dengan (posX, posY).
    * @param x Absis
    * @param y Ordinat
-   * @return True apabila objek dan p berada pada titik (x, y)
+   * @return True apabila objek dan p berada pada titik (posX, posY)
    */
   public boolean isEqual(int x, int y) {
-    return this.x == x && this.y == y;
+    return this.posX == x && this.posY == y;
   }
 }

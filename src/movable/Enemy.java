@@ -13,7 +13,8 @@ import game.Point;
  */
 public class Enemy implements Movable, Runnable {
 
-  private int width, height;
+  private int width;
+  private int height;
   private int speed;
   private Point pos;
   private int dir;
@@ -70,20 +71,20 @@ public class Enemy implements Movable, Runnable {
   @Override
   public void move(int code) {
     if (code == 0) {
-      if (pos.getY() > Game.HEIGHT - height || pos.getY() < 0) {
+      if (pos.getPosY() > Game.HEIGHT - height || pos.getPosY() < 0) {
         speed *= -1;
       }
-      pos.setY(pos.getY() + speed);
+      pos.setPosY(pos.getPosY() + speed);
     } else if (code == 1) {
-      if (pos.getX() > Game.WIDTH - width || pos.getX() < 0) {
+      if (pos.getPosX() > Game.WIDTH - width || pos.getPosX() < 0) {
         speed *= -1;
       }
-      pos.setX(pos.getX() + speed);
+      pos.setPosX(pos.getPosX() + speed);
     }
   }
 
   /**
-   * Getter lebar badan
+   * Getter lebar badan.
    * @return width
    */
   public int getWidth() {
@@ -177,4 +178,21 @@ public class Enemy implements Movable, Runnable {
   public void setDelay(int delay) {
     this.delay = delay;
   }
+
+  /**
+   * Setter posisi absis.
+   * @param posX Posisi absis
+   */
+  public void setPosX(int posX) {
+    pos.setPosX(posX);
+  }
+
+  /**
+   * Setter posisi ordinat.
+   * @param posY Posisi ordinat
+   */
+  public void setPosY(int posY) {
+    pos.setPosY(posY);
+  }
+
 }

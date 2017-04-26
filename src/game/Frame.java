@@ -1,12 +1,15 @@
 package game;
 
 import java.awt.CardLayout;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 import movable.Player;
 
 /**
@@ -21,8 +24,8 @@ public class Frame extends JFrame implements ActionListener {
 
   public static CardLayout layout = new CardLayout();
   public static JPanel mainPanel = new JPanel();
-  final private int HEIGHT = 720;
-  final private int WIDTH = 1280;
+  private final int heightCons = 720;
+  private final int widthCons = 1280;
   JButton newGameButton = new JButton("New game");
   JButton exitButton = new JButton("Exit");
   JButton aboutButton = new JButton("About");
@@ -39,8 +42,7 @@ public class Frame extends JFrame implements ActionListener {
 
   /**
    * Constructor.
-   * @throws FileNotFoundException Apabila file target yang akan dibaca tidak
-   * ditemukan
+   * @throws FileNotFoundException Apabila file target yang akan dibaca tidak ditemukan
    */
   public Frame() throws FileNotFoundException {
 
@@ -50,7 +52,7 @@ public class Frame extends JFrame implements ActionListener {
     add(mainPanel);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setName("DorSoBakGo");
-    setSize(WIDTH, HEIGHT);
+    setSize(widthCons, heightCons);
     setResizable(false);
     setLocationRelativeTo(null);
     setVisible(true);
@@ -60,8 +62,7 @@ public class Frame extends JFrame implements ActionListener {
   /**
    * addButtons.
    * Menangani komponen Button pada UI
-   * @throws FileNotFoundException Apabila file target yang akan dibaca tidak
-   * ditemukan
+   * @throws FileNotFoundException Apabila file target yang akan dibaca tidak ditemukan
    */
   private void addButtons() throws FileNotFoundException {
     newGameButton.addActionListener(this);
@@ -121,8 +122,7 @@ public class Frame extends JFrame implements ActionListener {
         }
         layout.show(mainPanel, "game");
       }
-    } else if (source == mainMenuButton || source == okButton1 || source ==
-      okButton2) {
+    } else if (source == mainMenuButton || source == okButton1 || source == okButton2) {
       if (game != null) {
         game.stopTimer();
         Game.setLevel(0);
@@ -131,6 +131,4 @@ public class Frame extends JFrame implements ActionListener {
       layout.show(mainPanel, "Menu");
     }
   }
-
-
 }
