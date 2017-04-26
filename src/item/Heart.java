@@ -1,6 +1,9 @@
 package item;
 
-import movable.Player;
+import movable.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import javax.imageio.ImageIO;
 
 /**
  * Created by akmalfadlurohman on 4/23/17.
@@ -11,11 +14,26 @@ import movable.Player;
  * Menangani item "Heart"
  */
 public class Heart extends Item {
+  private BufferedImage image;
+
   /**
    * Konstruktor.
    */
-  public Heart() {
-    super("item.Heart", "Add additional life to player", 0, 0);
+  public Heart(int posX, int posY) {
+    super("Heart", "Add additional life to player", posX, posY);
+    try {
+      image = ImageIO.read(new File("./images/heart.png"));
+    } catch (IOException ex) {
+      System.out.println(ex.getMessage());
+    }
+  }
+
+  /**
+   * Getter gambar item.
+   * @return image
+   */
+  public BufferedImage getImage() {
+    return image;
   }
 
   /**
@@ -25,4 +43,11 @@ public class Heart extends Item {
   public void applyEffect(Player P) {
     Player.setLife(Player.getLife() + 1);
   }
+
+  /**
+   * Menjalankan efek item.
+   * @param E Array musuh
+   */
+  public void applyEffect(Enemy[] E) {}
+
 }

@@ -19,3 +19,12 @@ enemyPosY=200
 enemySpeed=5
 enemyDelay=5
 enemyDirection=0
+itemCount=2
+#1
+Bonus
+itemPosX=470
+itemPosY=450
+#2
+Heart
+itemPosX=800
+itemPosY=50

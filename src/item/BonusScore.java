@@ -1,6 +1,9 @@
 package item;
 
-import movable.Player;
+import movable.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import javax.imageio.ImageIO;
 
 /**
  * Created by akmalfadlurohman on 4/23/17.
@@ -11,12 +14,33 @@ import movable.Player;
  * Menangani item "Bonus"
  */
 public class BonusScore extends Item {
+  private BufferedImage image;
+
   /**
    * Konstruktor.
    */
-  public BonusScore() {
-    super("Bonus Score", "movable.Player's score +10", 0, 0);
+  public BonusScore(int posX, int posY) {
+    super("Bonus Score", "movable.Player's score +10", posX, posY);
+    try {
+      image = ImageIO.read(new File("./images/star.png"));
+    } catch (IOException ex) {
+      System.out.println(ex.getMessage());
+    }
   }
+
+  /**
+   * Getter gambar item.
+   * @return image
+   */
+  public BufferedImage getImage() {
+    return image;
+  }
+
+  /**
+   * Menjalankan efek item.
+   * @param E Array musuh
+   */
+  public void applyEffect(Enemy[] E) {}
 
   /**
    * Menjalankan efek item.

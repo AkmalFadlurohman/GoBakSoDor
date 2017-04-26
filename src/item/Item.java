@@ -1,4 +1,9 @@
 package item;
+import game.*;
+import movable.*;
+
+import java.awt.image.BufferedImage;
+
 
 /**
  * Created by akmalfadlurohman on 4/23/17.
@@ -10,21 +15,22 @@ package item;
  */
 public abstract class Item {
 
-  int locX, locY;
   private String name, effect;
+  private Point pos;
+  public static final int width = 30;
+  public static final int height = 30;
 
   /**
    * Konstruktor.
    * @param name Nama item
    * @param effect jenis efek item
-   * @param x Absis item
-   * @param y Ordinat item
+   * @param posX Absis item
+   * @param posY Ordinat item
    */
-  public Item(String name, String effect, int x, int y) {
+  public Item(String name, String effect, int posX, int posY) {
     this.name = name;
     this.effect = effect;
-    locX = x;
-    locY = y;
+    this.pos = new Point(posX, posY);
   }
 
   /**
@@ -33,14 +39,6 @@ public abstract class Item {
    */
   public String getEffect() {
     return effect;
-  }
-
-  /**
-   * Setter efek item.
-   * @param effect effect
-   */
-  public void setEffect(String effect) {
-    this.effect = effect;
   }
 
   /**
@@ -60,34 +58,32 @@ public abstract class Item {
   }
 
   /**
-   * Getter lokasi absis item.
-   * @return locX
+   * Setter efek item.
+   * @param effect effect
    */
-  public int getLocX() {
-    return locX;
+  public void setEffect(String effect) {
+    this.effect = effect;
   }
 
   /**
-   * Setter lokasi absis item.
-   * @param locX locX
+   * Getter koordinat item.
+   * @return pos
    */
-  public void setLocX(int locX) {
-    this.locX = locX;
+  public Point getPos() {
+    return pos;
   }
 
   /**
-   * Getter lokasi ordinat item.
-   * @return locY
+   * Setter koordinat item.
+   * @param pos pos
    */
-  public int getLocY() {
-    return locY;
+  public void setPos(Point pos) {
+    this.pos = pos;
   }
 
-  /**
-   * Setter lokasi ordinat item.
-   * @param locY locY
-   */
-  public void setLocY(int locY) {
-    this.locY = locY;
-  }
+  abstract public BufferedImage getImage();
+
+  abstract public void applyEffect(Enemy[] E);
+
+  abstract public  void applyEffect(Player p);
 }

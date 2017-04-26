@@ -1,7 +1,9 @@
 package game;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
 /**
  * Created by Husnulzaki Wibisono Haryadi (13515005) on 4/26/17.
@@ -13,7 +15,6 @@ import java.awt.*;
  */
 public class GameWinPanel extends JPanel {
   private Image background;
-
   /**
    * Konstruktor.
    */

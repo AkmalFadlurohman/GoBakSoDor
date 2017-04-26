@@ -17,6 +17,9 @@ import javax.swing.*;
 import movable.Enemy;
 import movable.Player;
 import tile.Tile;
+import item.*;
+import java.util.ArrayList;
+
 
 @SuppressWarnings("serial")
 /**
@@ -28,13 +31,14 @@ public class Game extends JPanel {
   public static final int WIDTH = 1280;
   private static final String PRESSED = "pressed";
   private static final String RELEASED = "released";
-  private static int level = 1;
-  private Player player;
-  private Enemy[] enemyPool;
-  private int playerPosX;
-  private int playerPosY;
-  private Tile start = new Tile();
-  private Tile finish = new Tile();
+  static int level = 1;
+  Player player;
+  Enemy[] enemyPool;
+  ArrayList<Item> itemPool;
+  int playerPosX;
+  int playerPosY;
+  Tile start = new Tile();
+  Tile finish = new Tile();
   private Map<Dir, Boolean> dirMap = new EnumMap<>(Dir.class);
   private Timer animationTimer = new Timer(10, new AnimationListener());
   private BufferedImage imageLogo, imageBall;
@@ -107,13 +111,29 @@ public class Game extends JPanel {
           enemyPosX, enemyPosY, dir, delay);
         new Thread(enemyPool[i]).start();
       }
-
-      player = new Player(Player.getName(), new Point(playerPosX, playerPosY)
-        , speedPlayer, diameter);
+      player = new Player(Player.getName(), new Point(playerPosX, playerPosY), speedPlayer, diameter);
+      itemPool = new ArrayList<Item>();
+      strLine = br.readLine();
+      int itemCount = Integer.parseInt(strLine.substring(10));
+      for (int i = 0; i < itemCount; i++) {
+        strLine = br.readLine();
+        strLine = br.readLine();
+        String itemName = strLine;
+        strLine = br.readLine();
+        int posX = Integer.parseInt(strLine.substring(9));
+        strLine = br.readLine();
+        int posY = Integer.parseInt(strLine.substring(9));
+        if (itemName.equals("Bonus")) {
+          itemPool.add(new BonusScore(posX, posY));
+        } else if (itemName.equals("Heart")) {
+          itemPool.add(new Heart(posX, posY));
+        } else if (itemName.equals("Special")) {
+          itemPool.add(new Special(posX, posY));
+        }
+      }
     } catch (IOException ioe) {
       System.out.println(ioe.getMessage());
     }
-
     for (Dir dir : Dir.values()) {
       dirMap.put(dir, Boolean.FALSE);
     }
@@ -171,6 +191,9 @@ public class Game extends JPanel {
     g2d.drawString("Score: " + Player.getScore(), 530, HEIGHT + 90);
     g2d.drawString("Life: " + Player.getLife(), 900, HEIGHT + 50);
     g2d.drawString("Level: " + level, 900, HEIGHT + 90);
+    for (Item anItem : itemPool) {
+      g2d.drawImage(anItem.getImage(), anItem.getPos().getX(), anItem.getPos().getY(), Item.width, Item.height, this);
+    }
   }
 
   /**
@@ -315,6 +338,16 @@ public class Game extends JPanel {
         animationTimer.stop();
         Frame.layout.show(Frame.mainPanel, "NextLevel");
       }
+      for (int i=0;i<itemPool.size();i++) {
+        if (player.contain(itemPool.get(i))) {
+          itemPool.get(i).applyEffect(player);
+          itemPool.get(i).applyEffect(enemyPool);
+          itemPool.remove(i);
+        }
+      }
+        if (player.gameOver()) {
+          //TODO: MASUKIN KE HIGHSCORE
+        }
 
       if (player.contain(finish.getPosX(), finish.getPosY(), finish.getWidth
         (), finish.getHeight()) && level == 5) {
