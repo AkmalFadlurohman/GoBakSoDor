@@ -2,7 +2,6 @@ package movable;
 
 import game.Game;
 import game.Point;
-import item.Item;
 
 /**
  * Created by Diki Ardian W (13515092) on 4/23/17.
@@ -264,16 +263,5 @@ public class Player implements Movable {
       <= enemy.getPos().getPosX() + enemy.getWidth()) && (pos.getPosY() + diameter
       >= enemy.getPos().getPosY() && pos.getPosY() <= enemy.getPos().getPosY()
       + enemy.getHeight()));
-  }
-
-  /**
-   * Memeriksa apakah player bersinggungan dengan item tertentu.
-   * @param item item
-   * @return True apabila player bersinggungan dengan item
-   */
-  public boolean contain(Item item) {
-    return ((pos.getPosX() + diameter >= item.getPos().getPosX() && pos.getPosX()
-      <= item.getPos().getPosX() + Item.width) && (pos.getPosY() + diameter
-      >= item.getPos().getPosY() && pos.getPosY() <= item.getPos().getPosY() + Item.height));
   }
 }
