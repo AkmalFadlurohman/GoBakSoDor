@@ -9,16 +9,12 @@ import java.io.*;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Scanner;
-import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import movable.Enemy;
 import movable.Player;
 import tile.Tile;
-import item.*;
-import java.util.ArrayList;
 
 
 @SuppressWarnings("serial")
@@ -31,10 +27,9 @@ public class Game extends JPanel {
   public static final int WIDTH = 1280;
   private static final String PRESSED = "pressed";
   private static final String RELEASED = "released";
-  static int level = 1;
+  static int level = 0;
   Player player;
   Enemy[] enemyPool;
-  ArrayList<Item> itemPool;
   int playerPosX;
   int playerPosY;
   Tile start = new Tile();
@@ -57,7 +52,7 @@ public class Game extends JPanel {
       System.out.println(ex.getMessage());
     }
 
-    String namaFile = "./level/" + Integer.toString(Game.level) + ".txt";
+    String namaFile = "./level/0.txt";
     try {
 
       FileInputStream fstream = new FileInputStream(namaFile);
@@ -112,25 +107,7 @@ public class Game extends JPanel {
         new Thread(enemyPool[i]).start();
       }
       player = new Player(Player.getName(), new Point(playerPosX, playerPosY), speedPlayer, diameter);
-      itemPool = new ArrayList<Item>();
       strLine = br.readLine();
-      int itemCount = Integer.parseInt(strLine.substring(10));
-      for (int i = 0; i < itemCount; i++) {
-        strLine = br.readLine();
-        strLine = br.readLine();
-        String itemName = strLine;
-        strLine = br.readLine();
-        int posX = Integer.parseInt(strLine.substring(9));
-        strLine = br.readLine();
-        int posY = Integer.parseInt(strLine.substring(9));
-        if (itemName.equals("Bonus")) {
-          itemPool.add(new BonusScore(posX, posY));
-        } else if (itemName.equals("Heart")) {
-          itemPool.add(new Heart(posX, posY));
-        } else if (itemName.equals("Special")) {
-          itemPool.add(new Special(posX, posY));
-        }
-      }
     } catch (IOException ioe) {
       System.out.println(ioe.getMessage());
     }
@@ -188,12 +165,7 @@ public class Game extends JPanel {
     g2d.drawImage(imageLogo, 0, 607, this);
     g2d.setFont(new Font("Ubuntu", Font.PLAIN, 40));
     g2d.drawString("Name: " + Player.getName(), 530, HEIGHT + 50);
-    g2d.drawString("Score: " + Player.getScore(), 530, HEIGHT + 90);
     g2d.drawString("Life: " + Player.getLife(), 900, HEIGHT + 50);
-    g2d.drawString("Level: " + level, 900, HEIGHT + 90);
-    for (Item anItem : itemPool) {
-      g2d.drawImage(anItem.getImage(), anItem.getPos().getX(), anItem.getPos().getY(), Item.width, Item.height, this);
-    }
   }
 
   /**
@@ -220,41 +192,6 @@ public class Game extends JPanel {
    */
   void stopTimer() {
     animationTimer.stop();
-  }
-
-  /**
-   * Memasukkan nilai player ke file eksternal
-   * @throws IOException Apabila file target yang akan dibaca tidak
-   * ditemukan
-   */
-  void submitScore() throws IOException {
-    Writer output = new BufferedWriter(new FileWriter("./score/score.txt",
-      true));
-    output.append("\n" + Player.getName() + ":" + Player.getScore() + ":");
-    output.close();
-  }
-
-  /**
-   * Mengembalikan nama pemain dengan score tertinggi.
-   * @return Nama pemain
-   * @throws FileNotFoundException Apabila file target yang akan dibaca tidak
-   * ditemukan
-   */
-  static String getHighScore() throws FileNotFoundException {
-    int max = -1;
-    String maxname = "";
-    Scanner scan = new Scanner(new File("./score/score.txt"));
-    scan.useDelimiter(Pattern.compile(":"));
-    while (scan.hasNext()) {
-      String name = scan.next();
-      int score = Integer.parseInt(scan.next());
-      if (max < score) {
-        max = score;
-        maxname = name;
-      }
-    }
-    scan.close();
-    return (maxname + ":" + max + ":");
   }
 
   /**
@@ -332,25 +269,7 @@ public class Game extends JPanel {
       }
 
       if (player.contain(finish.getPosX(), finish.getPosY(), finish.getWidth
-        (), finish.getHeight())) {
-        Player.setScore(Player.getScore() + 1);
-        level++;
-        animationTimer.stop();
-        Frame.layout.show(Frame.mainPanel, "NextLevel");
-      }
-      for (int i=0;i<itemPool.size();i++) {
-        if (player.contain(itemPool.get(i))) {
-          itemPool.get(i).applyEffect(player);
-          itemPool.get(i).applyEffect(enemyPool);
-          itemPool.remove(i);
-        }
-      }
-        if (player.gameOver()) {
-          //TODO: MASUKIN KE HIGHSCORE
-        }
-
-      if (player.contain(finish.getPosX(), finish.getPosY(), finish.getWidth
-        (), finish.getHeight()) && level == 5) {
+        (), finish.getHeight()) && level == 0) {
         Player.setScore(Player.getScore() + 1);
         animationTimer.stop();
         Frame.layout.show(Frame.mainPanel, "GameWin");

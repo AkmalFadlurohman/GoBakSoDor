@@ -32,7 +32,6 @@ public class Frame extends JFrame implements ActionListener {
   JButton okButton2 = new JButton("OK");
   MenuPanel menuPanel = new MenuPanel();
   AboutPanel aboutPanel = new AboutPanel();
-  NextLvlPanel nextLvlPanel = new NextLvlPanel();
   GameWinPanel gameWinPanel = new GameWinPanel();
   GameOverPanel gameOverPanel = new GameOverPanel();
   JLabel highScoreLabel = new JLabel("High Score", JLabel.RIGHT);
@@ -77,19 +76,8 @@ public class Frame extends JFrame implements ActionListener {
     menuPanel.add(aboutButton);
     menuPanel.add(exitButton);
 
-    String hs = Game.getHighScore();
-    String[] parts = hs.split("\\:");
-    String name = parts[0];
-    String score = parts[1];
-    highScoreLabel.setText("High Score: " + name + " (" + score + ")" );
-    highScoreLabel.setFont(new Font("Ubuntu", Font.BOLD, 18));
-    menuPanel.add(highScoreLabel);
-
     mainPanel.add("Menu", menuPanel);
     mainPanel.add("About", aboutPanel);
-
-    nextLvlPanel.add(nextLevelButton);
-    mainPanel.add("NextLevel", nextLvlPanel);
 
     gameWinPanel.add(okButton2);
     mainPanel.add("GameWin", gameWinPanel);
@@ -136,18 +124,8 @@ public class Frame extends JFrame implements ActionListener {
     } else if (source == mainMenuButton || source == okButton1 || source ==
       okButton2) {
       if (game != null) {
-        if (source == okButton1 || source == okButton2) {
-          try {
-            game.submitScore();
-          } catch (FileNotFoundException e) {
-            e.printStackTrace();
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
-        }
         game.stopTimer();
-        Game.setLevel(1);
-        Player.setScore(0);
+        Game.setLevel(0);
         Player.setLife(3);
       }
       layout.show(mainPanel, "Menu");

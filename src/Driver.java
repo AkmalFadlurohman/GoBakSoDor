@@ -16,28 +16,8 @@ import sun.audio.ContinuousAudioDataStream;
  * Implementasi program utama
  */
 public class Driver {
-  /**
-   * Memutar musik pada program.
-   */
-  public static void music() {
-
-    AudioStream BGM = null;
-    AudioData MD;
-    AudioPlayer MP = AudioPlayer.player;
-    ContinuousAudioDataStream loop = null;
-
-    try {
-      BGM = new AudioStream(new FileInputStream("./music/music.wav"));
-      MD = BGM.getData();
-      loop = new ContinuousAudioDataStream(MD);
-      MP.start(loop);
-    } catch (IOException error) {
-      MP.start(BGM);
-    }
-  }
 
   public static void main(String[] args) throws FileNotFoundException {
-    music();
     new Frame();
   }
 }
