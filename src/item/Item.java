@@ -1,9 +1,11 @@
 package item;
-import game.*;
-import movable.*;
+
+import game.Point;
 
 import java.awt.image.BufferedImage;
 
+import movable.Enemy;
+import movable.Player;
 
 /**
  * Created by akmalfadlurohman on 4/23/17.
@@ -15,7 +17,8 @@ import java.awt.image.BufferedImage;
  */
 public abstract class Item {
 
-  private String name, effect;
+  private String name;
+  private String effect;
   private Point pos;
   public static final int width = 30;
   public static final int height = 30;
@@ -81,9 +84,9 @@ public abstract class Item {
     this.pos = pos;
   }
 
-  abstract public BufferedImage getImage();
+  public abstract BufferedImage getImage();
 
-  abstract public void applyEffect(Enemy[] E);
+  public abstract void applyEffect(Enemy[] e);
 
-  abstract public  void applyEffect(Player p);
+  public abstract void applyEffect(Player p);
 }

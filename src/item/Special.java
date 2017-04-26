@@ -1,12 +1,15 @@
 package item;
 
-import movable.*;
-
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.Timer;
+
+import movable.Enemy;
+import movable.Player;
 
 /**
  * Created by akmalfadlurohman on 4/23/17.
@@ -41,20 +44,20 @@ public class Special extends Item {
 
   /**
    * Menjalankan efek item.
-   * @param E Array musuh
+   * @param e Array musuh
    */
-  public void applyEffect(Enemy[] E) {
-    int[] originalSPeed = new int[E.length];
+  public void applyEffect(Enemy[] e) {
+    int[] originalSPeed = new int[e.length];
 
-    for (int i = 0; i < E.length; i++) {
-      originalSPeed[i] = E[i].getSpeed();
-      E[i].setSpeed(E[i].getSpeed()/2);
+    for (int i = 0; i < e.length; i++) {
+      originalSPeed[i] = e[i].getSpeed();
+      e[i].setSpeed(e[i].getSpeed() / 2);
     }
     Timer timer = new Timer(5000, new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent arg0) {
-        for (int i=0; i<E.length; i++) {
-          E[i].setSpeed(originalSPeed[i]);
+        for (int i = 0; i < e.length; i++) {
+          e[i].setSpeed(originalSPeed[i]);
         }
       }
     });

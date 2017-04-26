@@ -1,9 +1,12 @@
 package item;
 
-import movable.*;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import javax.imageio.ImageIO;
+
+import movable.Enemy;
+import movable.Player;
 
 /**
  * Created by akmalfadlurohman on 4/23/17.
@@ -38,15 +41,15 @@ public class BonusScore extends Item {
 
   /**
    * Menjalankan efek item.
-   * @param E Array musuh
+   * @param e Array musuh
    */
-  public void applyEffect(Enemy[] E) {}
+  public void applyEffect(Enemy[] e) {}
 
   /**
    * Menjalankan efek item.
-   * @param P Player saat ini
+   * @param p Player saat ini
    */
-  public void applyEffect(Player P) {
+  public void applyEffect(Player p) {
     Player.setScore(Player.getScore() + 10);
   }
 }

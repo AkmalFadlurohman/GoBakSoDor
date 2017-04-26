@@ -12,8 +12,8 @@ import game.Point;
  * Menangani kelas musuh
  */
 public class Enemy implements Movable, Runnable {
-
-  private int width, height;
+  private int width;
+  private int height;
   private int speed;
   private Point pos;
   private int dir;
@@ -32,13 +32,13 @@ public class Enemy implements Movable, Runnable {
 
   /**
    * Konstruktor berparameter.
-   * @param width Lebar badan
+   * @param width  Lebar badan
    * @param height Panjang badan
-   * @param speed Kecepatan gerak
-   * @param posX Posisi absis
-   * @param posY Posisi ordinat
-   * @param dir Arah gerak
-   * @param delay Delay timer
+   * @param speed  Kecepatan gerak
+   * @param posX   Posisi absis
+   * @param posY   Posisi ordinat
+   * @param dir    Arah gerak
+   * @param delay  Delay timer
    */
   public Enemy(int width, int height, int speed, int posX, int posY, int dir, int delay) {
     this.width = width;
@@ -65,25 +65,27 @@ public class Enemy implements Movable, Runnable {
 
   /**
    * Mengatur pergerakan objek.
+   *
    * @param code Tidak memiliki efek apapun
    */
   @Override
   public void move(int code) {
     if (code == 0) {
-      if (pos.getY() > Game.HEIGHT - height || pos.getY() < 0) {
+      if (pos.getPosY() > Game.HEIGHT - height || pos.getPosY() < 0) {
         speed *= -1;
       }
-      pos.setY(pos.getY() + speed);
+      pos.setPosY(pos.getPosY() + speed);
     } else if (code == 1) {
-      if (pos.getX() > Game.WIDTH - width || pos.getX() < 0) {
+      if (pos.getPosX() > Game.WIDTH - width || pos.getPosX() < 0) {
         speed *= -1;
       }
-      pos.setX(pos.getX() + speed);
+      pos.setPosX(pos.getPosX() + speed);
     }
   }
 
   /**
-   * Getter lebar badan
+   * Getter lebar badan.
+   *
    * @return width
    */
   public int getWidth() {
@@ -92,6 +94,7 @@ public class Enemy implements Movable, Runnable {
 
   /**
    * Setter lebar badan.
+   *
    * @param width width
    */
   public void setWidth(int width) {
@@ -100,6 +103,7 @@ public class Enemy implements Movable, Runnable {
 
   /**
    * Getter panjang badan.
+   *
    * @return height
    */
   public int getHeight() {
@@ -108,6 +112,7 @@ public class Enemy implements Movable, Runnable {
 
   /**
    * Setter panjang badan.
+   *
    * @param height height
    */
   public void setHeight(int height) {
@@ -116,6 +121,7 @@ public class Enemy implements Movable, Runnable {
 
   /**
    * Getter kecepatan gerak.
+   *
    * @return speed
    */
   public int getSpeed() {
@@ -124,6 +130,7 @@ public class Enemy implements Movable, Runnable {
 
   /**
    * Setter kecepatan gerak.
+   *
    * @param speed speed
    */
   public void setSpeed(int speed) {
@@ -132,6 +139,7 @@ public class Enemy implements Movable, Runnable {
 
   /**
    * Getter koordinat posisi.
+   *
    * @return pos
    */
   public Point getPos() {
@@ -140,6 +148,7 @@ public class Enemy implements Movable, Runnable {
 
   /**
    * Setter koordinat posisi.
+   *
    * @param pos pos
    */
   public void setPos(Point pos) {
@@ -148,6 +157,7 @@ public class Enemy implements Movable, Runnable {
 
   /**
    * Getter arah gerak.
+   *
    * @return dir
    */
   public int getDir() {
@@ -156,6 +166,7 @@ public class Enemy implements Movable, Runnable {
 
   /**
    * Stter arah gerak.
+   *
    * @param dir dir
    */
   public void setDir(int dir) {
@@ -164,6 +175,7 @@ public class Enemy implements Movable, Runnable {
 
   /**
    * Getter delay timer.
+   *
    * @return delay
    */
   public int getDelay() {
@@ -172,9 +184,27 @@ public class Enemy implements Movable, Runnable {
 
   /**
    * Setter delay timer.
+   *
    * @param delay delay
    */
   public void setDelay(int delay) {
     this.delay = delay;
   }
+
+  /**
+   * Setter posisi absis.
+   * @param posX Posisi absis
+   */
+  public void setPosX(int posX) {
+    pos.setPosX(posX);
+  }
+
+  /**
+   * Setter posisi ordinat.
+   * @param posY Posisi ordinat
+   */
+  public void setPosY(int posY) {
+    pos.setPosY(posY);
+  }
+
 }

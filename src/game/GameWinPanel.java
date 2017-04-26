@@ -15,6 +15,7 @@ import javax.swing.JPanel;
  */
 public class GameWinPanel extends JPanel {
   private Image background;
+
   /**
    * Konstruktor.
    */

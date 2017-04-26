@@ -21,18 +21,18 @@ public class Driver {
    */
   public static void music() {
 
-    AudioStream BGM = null;
-    AudioData MD;
-    AudioPlayer MP = AudioPlayer.player;
+    AudioStream bgm = null;
+    AudioData md;
+    AudioPlayer mp = AudioPlayer.player;
     ContinuousAudioDataStream loop = null;
 
     try {
-      BGM = new AudioStream(new FileInputStream("./music/music.wav"));
-      MD = BGM.getData();
-      loop = new ContinuousAudioDataStream(MD);
-      MP.start(loop);
+      bgm = new AudioStream(new FileInputStream("./music/music.wav"));
+      md = bgm.getData();
+      loop = new ContinuousAudioDataStream(md);
+      mp.start(loop);
     } catch (IOException error) {
-      MP.start(BGM);
+      mp.start(bgm);
     }
   }
 

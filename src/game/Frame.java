@@ -6,7 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 import movable.Player;
 
 /**
@@ -21,8 +26,8 @@ public class Frame extends JFrame implements ActionListener {
 
   public static CardLayout layout = new CardLayout();
   public static JPanel mainPanel = new JPanel();
-  final private int HEIGHT = 720;
-  final private int WIDTH = 1280;
+  private final int heightConst  = 720;
+  private final int widthConst = 1280;
   JButton newGameButton = new JButton("New game");
   JButton exitButton = new JButton("Exit");
   JButton aboutButton = new JButton("About");
@@ -40,8 +45,7 @@ public class Frame extends JFrame implements ActionListener {
 
   /**
    * Constructor.
-   * @throws FileNotFoundException Apabila file target yang akan dibaca tidak
-   * ditemukan
+   * @throws FileNotFoundException Apabila file target yang akan dibaca tidak ditemukan
    */
   public Frame() throws FileNotFoundException {
 
@@ -51,7 +55,7 @@ public class Frame extends JFrame implements ActionListener {
     add(mainPanel);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setName("DorSoBakGo");
-    setSize(WIDTH, HEIGHT);
+    setSize(widthConst, heightConst);
     setResizable(false);
     setLocationRelativeTo(null);
     setVisible(true);
@@ -61,8 +65,7 @@ public class Frame extends JFrame implements ActionListener {
   /**
    * addButtons.
    * Menangani komponen Button pada UI
-   * @throws FileNotFoundException Apabila file target yang akan dibaca tidak
-   * ditemukan
+   * @throws FileNotFoundException Apabila file target yang akan dibaca tidak ditemukan
    */
   private void addButtons() throws FileNotFoundException {
     newGameButton.addActionListener(this);
@@ -77,12 +80,7 @@ public class Frame extends JFrame implements ActionListener {
     menuPanel.add(aboutButton);
     menuPanel.add(exitButton);
 
-    String hs = Game.getHighScore();
-    String[] parts = hs.split("\\:");
-    String name = parts[0];
-    String score = parts[1];
-    highScoreLabel.setText("High Score: " + name + " (" + score + ")" );
-    highScoreLabel.setFont(new Font("Ubuntu", Font.BOLD, 18));
+    writeHighScore();
     menuPanel.add(highScoreLabel);
 
     mainPanel.add("Menu", menuPanel);
@@ -133,12 +131,12 @@ public class Frame extends JFrame implements ActionListener {
         }
         layout.show(mainPanel, "game");
       }
-    } else if (source == mainMenuButton || source == okButton1 || source ==
-      okButton2) {
+    } else if (source == mainMenuButton || source == okButton1 || source == okButton2) {
       if (game != null) {
         if (source == okButton1 || source == okButton2) {
           try {
             game.submitScore();
+            writeHighScore();
           } catch (FileNotFoundException e) {
             e.printStackTrace();
           } catch (IOException e) {
@@ -154,5 +152,17 @@ public class Frame extends JFrame implements ActionListener {
     }
   }
 
+  /**
+   * Menulis score ke file eksternal.
+   * @throws FileNotFoundException Apabila file target yang akan dibaca tidak ditemukan
+   */
+  public void writeHighScore() throws FileNotFoundException {
+    String hs = Game.getHighScore();
+    String[] parts = hs.split("\\:");
+    String name = parts[0];
+    String score = parts[1];
+    highScoreLabel.setText("High Score: " + name + " (" + score + ")");
+    highScoreLabel.setFont(new Font("Ubuntu", Font.BOLD, 18));
+  }
 
 }
