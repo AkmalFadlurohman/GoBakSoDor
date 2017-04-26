@@ -12,7 +12,7 @@ class PlayerTest {
     Player p = new Player();
     p.setPos(2, 3);
     Point pos = new Point(2, 3);
-    System.out.println("x : " + p.getPos().getX() + " y : " + p.getPos().getY
+    System.out.println("x : " + p.getPos().getPosX() + " y : " + p.getPos().getPosY
       ());
     assertTrue(p.contain(pos));
   }
@@ -21,7 +21,7 @@ class PlayerTest {
   void contain1() {
     Player p = new Player();
     p.setPos(2, 3);
-    System.out.println("x : " + p.getPos().getX() + " y : " + p.getPos().getY
+    System.out.println("x : " + p.getPos().getPosX() + " y : " + p.getPos().getPosY
       ());
     assertTrue(p.contain(2, 3));
   }
