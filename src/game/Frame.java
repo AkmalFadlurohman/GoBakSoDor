@@ -119,7 +119,7 @@ public class Frame extends JFrame implements ActionListener {
         name = JOptionPane.showInputDialog(this, "Input Username:");
         Player.setName(name);
       }
-      if (Player.getName() == null) {
+      if (Player.getName() == null || Player.getName().length() == 0) {
         layout.show(mainPanel, "Menu");
       } else {
         try {

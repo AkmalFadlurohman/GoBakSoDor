@@ -1,0 +1,277 @@
+--------------------------------------------------
+- Package: Default
+--------------------------------------------------
+
+Stats:
+    Total Classes: 1
+    Concrete Classes: 1
+    Abstract Classes: 0
+
+    Ca: 0
+    Ce: 4
+
+    A: 0
+    I: 1
+    D: 0
+
+Abstract Classes:
+
+Concrete Classes:
+    Driver
+
+Depends Upon:
+    game
+    java.io
+    java.lang
+    sun.audio
+
+Used By:
+    Not used by any packages.
+
+--------------------------------------------------
+- Package: game
+--------------------------------------------------
+
+Stats:
+    Total Classes: 11
+    Concrete Classes: 11
+    Abstract Classes: 0
+
+    Ca: 3
+    Ce: 12
+
+    A: 0
+    I: 0.8
+    D: 0.2
+
+Abstract Classes:
+
+Concrete Classes:
+    game.AboutPanel
+    game.Frame
+    game.Game
+    game.Game$1
+    game.Game$AnimationListener
+    game.Game$Dir
+    game.Game$DirAction
+    game.GameOverPanel
+    game.MenuPanel
+    game.NextLvlPanel
+    game.Point
+
+Depends Upon:
+    item
+    java.awt
+    java.awt.event
+    java.awt.image
+    java.io
+    java.lang
+    java.util
+    java.util.regex
+    javax.imageio
+    javax.swing
+    movable
+    tile
+
+Used By:
+    Default
+    item
+    movable
+
+--------------------------------------------------
+- Package: item
+--------------------------------------------------
+
+Stats:
+    Total Classes: 5
+    Concrete Classes: 4
+    Abstract Classes: 1
+
+    Ca: 2
+    Ce: 8
+
+    A: 0.2
+    I: 0.8
+    D: 0
+
+Abstract Classes:
+    item.Item
+
+Concrete Classes:
+    item.BonusScore
+    item.Heart
+    item.Special
+    item.Special$1
+
+Depends Upon:
+    game
+    java.awt.event
+    java.awt.image
+    java.io
+    java.lang
+    javax.imageio
+    javax.swing
+    movable
+
+Used By:
+    game
+    movable
+
+--------------------------------------------------
+- Package: java.awt
+--------------------------------------------------
+No stats available: package referenced, but not analyzed.
+
+--------------------------------------------------
+- Package: java.awt.event
+--------------------------------------------------
+No stats available: package referenced, but not analyzed.
+
+--------------------------------------------------
+- Package: java.awt.image
+--------------------------------------------------
+No stats available: package referenced, but not analyzed.
+
+--------------------------------------------------
+- Package: java.io
+--------------------------------------------------
+No stats available: package referenced, but not analyzed.
+
+--------------------------------------------------
+- Package: java.lang
+--------------------------------------------------
+No stats available: package referenced, but not analyzed.
+
+--------------------------------------------------
+- Package: java.util
+--------------------------------------------------
+No stats available: package referenced, but not analyzed.
+
+--------------------------------------------------
+- Package: java.util.regex
+--------------------------------------------------
+No stats available: package referenced, but not analyzed.
+
+--------------------------------------------------
+- Package: javax.imageio
+--------------------------------------------------
+No stats available: package referenced, but not analyzed.
+
+--------------------------------------------------
+- Package: javax.swing
+--------------------------------------------------
+No stats available: package referenced, but not analyzed.
+
+--------------------------------------------------
+- Package: movable
+--------------------------------------------------
+
+Stats:
+    Total Classes: 3
+    Concrete Classes: 2
+    Abstract Classes: 1
+
+    Ca: 2
+    Ce: 3
+
+    A: 0.33
+    I: 0.6
+    D: 0.07
+
+Abstract Classes:
+    movable.Movable
+
+Concrete Classes:
+    movable.Enemy
+    movable.Player
+
+Depends Upon:
+    game
+    item
+    java.lang
+
+Used By:
+    game
+    item
+
+--------------------------------------------------
+- Package: sun.audio
+--------------------------------------------------
+No stats available: package referenced, but not analyzed.
+
+--------------------------------------------------
+- Package: tile
+--------------------------------------------------
+
+Stats:
+    Total Classes: 1
+    Concrete Classes: 1
+    Abstract Classes: 0
+
+    Ca: 1
+    Ce: 1
+
+    A: 0
+    I: 0.5
+    D: 0.5
+
+Abstract Classes:
+
+Concrete Classes:
+    tile.Tile
+
+Depends Upon:
+    java.lang
+
+Used By:
+    game
+
+
+--------------------------------------------------
+- Package Dependency Cycles:
+--------------------------------------------------
+
+Default
+    |
+    |-> game
+    |   movable
+    |-> game
+
+game
+    |
+    |   movable
+    |-> game
+
+item
+    |
+    |-> movable
+    |   game
+    |-> movable
+
+movable
+    |
+    |   game
+    |-> movable
+
+
+--------------------------------------------------
+- Summary:
+--------------------------------------------------
+
+Name, Class Count, Abstract Class Count, Ca, Ce, A, I, D, V:
+
+Default,1,0,0,4,0,1,0,1
+game,11,0,3,12,0,0.8,0.2,1
+item,5,1,2,8,0.2,0.8,0,1
+java.awt,0,0,1,0,0,0,1,1
+java.awt.event,0,0,2,0,0,0,1,1
+java.awt.image,0,0,2,0,0,0,1,1
+java.io,0,0,3,0,0,0,1,1
+java.lang,0,0,5,0,0,0,1,1
+java.util,0,0,1,0,0,0,1,1
+java.util.regex,0,0,1,0,0,0,1,1
+javax.imageio,0,0,2,0,0,0,1,1
+javax.swing,0,0,2,0,0,0,1,1
+movable,3,1,2,3,0.33,0.6,0.07,1
+sun.audio,0,0,1,0,0,0,1,1
+tile,1,0,1,1,0,0.5,0.5,1

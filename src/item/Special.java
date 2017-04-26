@@ -26,7 +26,7 @@ public class Special extends Item {
    * Konstruktor.
    */
   public Special(int posX, int posY) {
-    super("Special", "Slow enemies movement for one second", posX, posY);
+    super("Special", "Slow enemies movement for five second", posX, posY);
     try {
       image = ImageIO.read(new File("./images/snowflakes.png"));
     } catch (IOException ex) {

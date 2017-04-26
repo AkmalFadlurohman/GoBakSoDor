@@ -2,3 +2,4 @@ jekk:1:
 rozi:3:
 um:2:
 um:32:
+yoyo:45:

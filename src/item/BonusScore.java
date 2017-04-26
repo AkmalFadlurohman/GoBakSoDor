@@ -23,7 +23,7 @@ public class BonusScore extends Item {
    * Konstruktor.
    */
   public BonusScore(int posX, int posY) {
-    super("Bonus Score", "movable.Player's score +10", posX, posY);
+    super("Bonus Score", "Player's score +10", posX, posY);
     try {
       image = ImageIO.read(new File("./images/star.png"));
     } catch (IOException ex) {

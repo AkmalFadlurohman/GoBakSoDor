@@ -368,7 +368,7 @@ public class Game extends JPanel {
       }
 
       if (player.contain(finish.getPosX(), finish.getPosY(), finish.getWidth(),
-          finish.getHeight()) && level == 5) {
+          finish.getHeight()) && level > 5) {
         Player.setScore(Player.getScore() + 1);
         animationTimer.stop();
         Frame.layout.show(Frame.mainPanel, "GameWin");
